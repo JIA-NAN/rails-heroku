@@ -1,0 +1,15 @@
+{ "calendar": [
+  <% @start_date.upto(@end_date) { |date| %>
+  {
+   "date": "<%= date %>",
+   "status": "<%= @ap.get_adherence_status_on(date) %>",
+   <% records = @ap.get_records(date)
+      len = records.length
+      count = 0
+    %>
+   "records": [ <%  records.each do |r|  %><%= r.id %><% count = count + 1; if count < len %>,<% end %><%  end %> ]
+  }
+  <% if date < @end_date %>,<% end %>
+<% } %>
+]
+}

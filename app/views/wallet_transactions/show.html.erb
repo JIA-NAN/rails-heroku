@@ -1,0 +1,6 @@
+<p id="notice"><%= notice %></p>
+
+On <%= Ptime.to_human_readable(@wallet_transaction.created_at) %>, the patient <%= @patient.fullname %> was paid <%= number_to_currency(@wallet_transaction.amount) %>.
+</h3>
+<%= link_to 'Edit', edit_patient_wallet_transaction_path(@patient, @wallet_transaction) %> |
+<%= link_to 'Back', patient_wallet_transactions_path %>

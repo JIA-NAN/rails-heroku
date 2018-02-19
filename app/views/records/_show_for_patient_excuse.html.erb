@@ -1,0 +1,39 @@
+<table>
+  <tr>
+    <td><b>Record Status:</b></td>
+    <td><%= @record.status %></td>
+    <td><b>Labelled At:</b></td>
+    <td><%= localtime @record.created_at %></td>
+  </tr>
+  <tr>
+    <td><b>System Message:</b></td>
+    <td colspan="3"><%= @record.meta %>
+  </tr>
+  <% if has_an_explanation? @record %>
+  <tr>
+    <td><b><%= display_comment_name @record %>:</b></td>
+    <td colspan="3"><%= @record.comment %></td>
+  </tr>
+  <% end %>
+</table>
+
+<% unless has_an_explanation? @record %>
+  <h4>Submit Explanation</h4>
+  <%= simple_form_for([current_patient, @record],
+                      html: { multipart: true, class: "custom" }) do |f| %>
+    <%= f.input :comment, label: "Explain reasons for not taking pill:" %>
+    <%= f.submit "Submit", class: "button" %>
+  <% end %>
+<% end %>
+
+<h1>Grade</h1>
+
+<% if has_an_explanation? @record %>
+  <% if @record.grade %>
+    <%= render @record.grade %>
+  <% else %>
+    <p>Not Graded.</p>
+  <% end %>
+<% else %>
+  <p>Please submit an explanation above.</p>
+<% end %>

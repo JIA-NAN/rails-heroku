@@ -1,0 +1,30 @@
+<%= simple_form_for(@reward_rule) do |f| %>
+  <%= f.error_notification %>
+
+<table width="100">
+  <tr>
+    <td align="right">
+          After adhering fully consecutively for
+        </td>
+        <td>
+          <%= f.input :num_of_days, label: false, input_html: {maxlength: 2, size: 4}  %>
+        </td>
+        <td>
+          days,
+        </td>
+      </tr>
+      <tr>
+        <td align="right">
+        patient will received $
+      </td>
+      <td>
+        <%= f.input :reward, label: false, value: number_to_currency(f.object.reward) %>
+      </td>
+      </tr>
+</table>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

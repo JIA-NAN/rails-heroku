@@ -1,0 +1,11 @@
+<h1><%= t(:view_and_grade_record)%></h1>
+
+<% if patient_signed_in? %>
+  <% if @record.is_excuse? %>
+    <%= render 'show_for_patient_excuse' %>
+  <% else %>
+    <%= render 'show_for_patient_record' %>
+  <% end %>
+<% else %>
+  <%= render 'show_for_admin' %>
+<% end %>

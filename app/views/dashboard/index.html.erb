@@ -1,0 +1,35 @@
+<div class="dashboard-pending-records">
+  <h2>Recent Submissions</h2>
+  <% if @pending_records.empty? %>
+    <p>No videos pending to be graded.</p>
+  <% else %>
+    <%= render partial: "records/received_records",
+               locals: { table_id: 'recent_record_list',
+                         patient: nil,
+                         records: @pending_records,
+                         disable_delete: true } %>
+    <%= link_to("Grade Records", grading_path) %>
+    <% if @pending_records_count > @pending_records.length %> |
+      <%= link_to "List All " + @pending_records_count.to_s + " Ungraded Submitted Records", records_path(graded: false) %>
+    <% end %>
+  <% end %>
+</div>
+
+<hr>
+
+<div class="dashboard-missing-records">
+  <h2>Recent Missing Records</h2>
+
+  <% if @missing_records.empty? %>
+    <p>No missing records pending to be graded.</p>
+  <% else %>
+    <%= render partial: "records/missing_records",
+               locals: { table_id: 'missing_record_list',
+                         patient: nil,
+                         records: @missing_records,
+                         disable_delete: true} %>
+    <% if @missing_records_count > @missing_records.length %>
+      <%= link_to "List All " + @missing_records_count.to_s + " Ungraded Missing Records", records_path(received: false) %>
+    <% end %>
+  <% end %>
+</div>

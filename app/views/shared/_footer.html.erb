@@ -1,0 +1,30 @@
+  <footer class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <div class="large-6 small-12 columns">
+		  <p>MIST 2013-2016, NUS (Heroku | <%= Rails.env %> | Revision <%= MIST::REVISION %>)</p>
+      </div>
+
+      <div class="large-6 small-12 columns">
+        <% if admin_signed_in? %>
+          <%= link_to t(:logs), applogs_path %>
+          | <%= link_to t(:system), info_path %>
+        <% end %>
+        | <%= link_to t(:help), help_path %></li>
+        <% if any_signed_in? %>
+          | <%= link_to t(:feedback), feedback_path %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ujs/1.2.2/rails.min.js" type="text/javascript"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" type="text/javascript"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/dataTables.foundation.min.js" type="text/javascript"></script>
+  <%= javascript_include_tag "mist_datatable" %>
+  <%= javascript_include_tag "application" %>
+  <%= yield(:javascript) if content_for?(:javascript) %>
+  </body>
+</html>

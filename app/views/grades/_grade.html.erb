@@ -1,0 +1,37 @@
+  <table>
+    <tr>
+      <td><b><%= t(:pill_taken)%>?:</b></td>
+      <td><%= grade.pill_taken %></td>
+      <td><b><%= t(:graded_by)%></b></td>
+      <td><%= grade.admin.lastname %></td>
+      <td><b><%= t(:time)%>:</b></td>
+      <td><%= localtime grade.created_at %></td>
+    </tr>
+    <% unless @record.grade.explanation.empty? %>
+    <tr>
+      <td><b>Reason:</b></td>
+      <td colspan="5"><%= grade.explanation %></td>
+    </tr>
+    <% end %>
+     <% unless @record.grade.comment.empty? %>
+    <tr>
+      <td><b><%= t(:feedback)%>:</b></td>
+      <td colspan="5"><%= grade.comment %></td>
+    </tr>
+    <% end %>
+    <% if admin_signed_in? %>
+      <% if !@record.grade.note.empty? %>
+      <tr>
+        <td><b><%= t(:private_notes)%>:</b></td>
+        <td colspan="5"><%= grade.note %></td>
+      </tr>
+      <% end %>
+      <tr>
+        <td colspan="6">
+          <%= link_to t(:edit_grading), edit_patient_record_path(@record) %> |
+          <%= link_to t(:delete), [@record, @record.grade],
+              method: :delete, data: { confirm: t(:are_you_sure) } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>

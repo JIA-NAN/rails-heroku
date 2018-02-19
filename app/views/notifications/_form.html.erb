@@ -1,0 +1,18 @@
+<%= simple_form_for(@notification) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :patient_id, label: "To Patient", require: true, placeholder: "Input the last digits of MIST_ID, e.g. 100012, input: 12"%>
+
+    <label for="notification_send_at">* To Send At</label>
+    <input type="datetime-local" id="notification_send_at" name="notification[send_at]" value="<%= localdatetime @notification.send_at || Time.zone.now %>" >
+
+    <%= f.association :notification_service, include_blank: false %>
+
+    <%= f.input :message, as: :text %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

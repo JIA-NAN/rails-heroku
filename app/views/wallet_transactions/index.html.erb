@@ -1,0 +1,21 @@
+<h1>Wallet Transactions for <%= @patient.fullname %></h1>
+<% @patient.update_wallet %>
+
+<h3>Current Balance: <%= number_to_currency(@patient.wallet_balance) %> <%= link_to "pay", new_patient_wallet_transaction_path(@patient), {class: 'button small'} %> </h3>
+
+<table class="fullwidth" id="record_list">
+  <thead>
+    <th><%= t(:created_at)%></th>
+    <th><%= t(:amount)%></th>
+  </thead>
+  <tbody>
+    <% @patient.wallet_transactions.each do |t| %>
+  <tr>
+    <td><%= Ptime.to_human_readable(t.created_at) %></td>
+    <td><%= number_to_currency(t.amount, :unit => '$') %></td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+
+<%= link_to "View All Wallets", wallets_path %>

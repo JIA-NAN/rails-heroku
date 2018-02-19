@@ -1,0 +1,211 @@
+<%# Local variables: patient - patient to chart, schedule: schedule of the patient to chart %>
+<script src="http://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <div id="graph"><!-- Plotly chart will be drawn inside this DIV --></div>
+    <div id="pie-chart"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+    <script>
+    function dateToISOday(date) {
+    	var dd = date.getDate();
+    	var mm = date.getMonth() + 1; //January is 0!
+    	var yyyy = date.getFullYear();
+    	if (dd < 10) { dd = '0' + dd; }
+    	if (mm < 10) { mm = '0' + mm; }
+    	return yyyy + '-' + mm + '-' + dd;
+    }
+
+    function dateToISOtime(date) {
+    	var HH = date.getHours();
+    	var MM = date.getMinutes();
+    	if (HH < 10) { HH = '0' + HH; }
+    	if (MM < 10) { MM = '0' + MM; }
+    	return HH + ':' + MM;
+    }
+
+    // Filter out bad data (where date is 1970)
+    function validDate(date) {
+      var y = date.getFullYear();
+      return (y > 2010);
+    }
+
+    function getDate(record) {
+    	if (record != null) {
+    		d = new Date(record["actual_pill_time_at"]);
+    	} else {
+    		d = new Date(record["pill_time_at"]);
+    	}
+      offsetInMs = d.getTimezoneOffset() * 60000;
+      utc = new Date(d.getTime() + offsetInMs);
+      return new Date(utc.getTime() + 8*60*60000); // convert to UTC+8
+    }
+
+    <% end_time = [Date.tomorrow, schedule.terminated_at].min %>
+    var record_array = <%= raw patient.records.from_period(schedule.started_at, end_time).to_json %>;
+    var grade_array = <%= raw patient.records.from_period(schedule.started_at, end_time).map{ |record| record_status(record) }.to_json %>
+       var schedule = <%= raw schedule.to_json %>
+       var pill_taken_records = [];
+       var pill_not_taken_records = [];
+       var tbd_records = [];
+       var missing_records = [];
+       var pending_records = [];
+       for (var i=0; i< grade_array.length; i++) {
+    	   if (grade_array[i] == "yes") {
+    		   pill_taken_records.push(record_array[i]);
+    	   } else if (grade_array[i] == "no") {
+    		   pill_not_taken_records.push(record_array[i]);
+    	   } else if (grade_array[i] == "maybe") {
+    		   tbd_records.push(record_array[i]);
+    	   } else if (grade_array[i] == "missing") {
+    		   missing_records.push(record_array[i]);
+    	   } else if (grade_array[i] == "pending") {
+    		   pending_records.push(record_array[i]);
+    	   }
+       }
+
+    var FAKE_DATE = "2010-06-10 ";
+    var pill_taken_trace = {
+    	mode: 'markers',
+    	type: 'scatter',
+    	name: 'Pill Taken',
+    	marker: { size: 12,  color: 'green' },
+    };
+    var array_y = []
+    var array_text = []
+    pill_taken_trace["x"]  = []
+    pill_taken_trace["y"] = []
+    for (var i=0; i< pill_taken_records.length; i++){
+    	date = getDate(pill_taken_records[i]);
+    	if (validDate(date)) {
+    		pill_taken_trace["x"].push(dateToISOday(date));
+    		pill_taken_trace["y"].push(FAKE_DATE + dateToISOtime(date));
+    		array_text.push("a")
+    	}
+    }
+
+    var pill_not_taken_trace = {
+    	mode: 'markers',
+    	type: 'scatter',
+    	name: 'Pill Not Taken',
+    	marker: { size: 12,  color: 'blue' },
+    };
+
+    pill_not_taken_trace["x"]  = []
+    pill_not_taken_trace["y"] = []
+    for (var i=0; i< pill_not_taken_records.length; i++){
+    	date = getDate(pill_not_taken_records[i]);
+    	if (validDate(date)) {
+    		pill_not_taken_trace["x"].push(dateToISOday(date));
+    		pill_not_taken_trace["y"].push(FAKE_DATE + dateToISOtime(date));
+    	}
+    }
+
+    var tbd_trace = {
+    	mode: 'markers',
+    	type: 'scatter',
+    	name: 'TBD',
+    	marker: { size: 12,  color: 'gray' },
+    	color: "red"
+    };
+
+    tbd_trace["x"]  = []
+    tbd_trace["y"] = []
+    for (var i=0; i< tbd_records.length; i++){
+    	date = getDate(tbd_records[i]);
+    	if (validDate(date)) {
+    		tbd_trace["x"].push(dateToISOday(date));
+    		tbd_trace["y"].push(FAKE_DATE + dateToISOtime(date));
+    	}
+    }
+
+    var missing_trace = {
+    	mode: 'markers',
+    	type: 'scatter',
+    	name: 'Missing',
+    	marker: { size: 12,  color: 'red' },
+    	color: "red"
+    };
+
+
+    missing_trace["x"]  = []
+    missing_trace["y"] = []
+    for (var i=0; i< missing_records.length; i++){
+    	date = getDate(missing_records[i]);
+    	if (validDate(date)) {
+    		missing_trace["x"].push(dateToISOday(date));
+    		missing_trace["y"].push(FAKE_DATE + dateToISOtime(date));
+    	}
+    }
+
+    var pending_trace = {
+    	mode: 'markers',
+    	type: 'scatter',
+    	name: 'Pending',
+    	marker: { size: 12,  color: 'yellow' },
+    	color: "red"
+    };
+
+    pending_trace["x"]  = []
+    pending_trace["y"] = []
+
+    for (var i=0; i< pending_records.length; i++){
+    	date = getDate(pending_records[i]);
+    	if (validDate(date)) {
+    		pending_trace["x"].push(dateToISOday(date));
+    		pending_trace["y"].push(FAKE_DATE + dateToISOtime(date));
+    	}
+    }
+
+    var data = [ pill_taken_trace, pill_not_taken_trace, tbd_trace, missing_trace, pending_trace ];
+
+    var layout = {
+    	xaxis: {
+    		range: [ schedule["started_at"], schedule["terminated_at"]],
+    	},
+    	font: {
+    		family: "Roboto, Helvetica, Arial",
+    	},
+    	yaxis: {
+    		type: 'date',
+    		tickformat: '%H:%M',
+    		range: ["2017-06-30 00:00:00", "2017-06-30 23:59:00"],
+    		title: '',
+    		fixedrange: true
+    	},
+    	title:'Medication Time',
+    	height: 480,
+    	legend: {
+    		xanchor: 'center',
+    		orientation: 'h',
+    		x: 0.5
+    	}
+    };
+
+    Plotly.newPlot('graph', data, layout);
+
+    Plotly.relayout( 'graph', {
+    	'xaxis.autorange': true,
+    	'yaxis.autorange': true
+    });
+
+    var data = [{
+    	values: [pill_taken_records.length, pill_not_taken_records.length, tbd_records.length, missing_records.length, pending_records.length],
+    	labels: ['Pill Taken', 'Pill Not Taken', 'TBD', 'Missing', 'Pending'],
+    	colors: ['red'],
+    	marker: {
+    		colors: ['lightgreen', 'lightblue', 'gray', 'red', 'yellow']
+    	},
+    	type: 'pie',
+
+    }];
+
+    var layout = {
+    	height: 500,
+      legend: {
+        xanchor: 'center',
+        orientation: 'h',
+        x: 0.5
+      }
+    };
+
+    Plotly.newPlot('pie-chart', data, layout);
+    </script>

@@ -1,0 +1,6 @@
+<div class="patient-records">
+  <h2><%= t(:patient_records)%></h2>
+  <%= render partial: "records/all_records",
+             locals: { table_id: 'record_list', patient: @patient, records: @record } %>
+  <%= link_to t(:view_all_records), patient_records_path(@patient) %>
+</div>

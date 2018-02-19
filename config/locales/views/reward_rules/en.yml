@@ -1,0 +1,9 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  editing_rewrad_rule: "Update Reward Rule"
+  num_of_days: "Number of days"
+  reward: "Reward"
+  listing_reward_rules: "Reward Rule"
+  new_reward_rule: 'Create Reward Rule'

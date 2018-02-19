@@ -1,0 +1,44 @@
+<h1><%= t(:patients)%></h1>
+
+<p>
+  <%= link_to(t(:add_new_patient), new_patient_registration_path) %>
+</p>
+
+<%# display_filters(@filter.filters, @filter.active) %>
+
+<% if @active_patients.empty? %>
+  <p><%= t(:no_active_patient_available)%></p>
+<% else %>
+  <table class="fullwidth" id="patient_list">
+    <thead>
+      <tr>
+        <th><%= t(:id)%></th>
+        <th><%= t(:first_name)%></th>
+        <th><%= t(:last_name)%></th>
+        <th><%= t(:schedule)%></th>
+        <th><%= t(:records)%></th>
+        <th data-sortable="false"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <% @active_patients.each do |patient| %>
+      <tr>
+        <td><%= patient.mist_id %></td>
+        <td><%= patient.firstname.capitalize %></td>
+        <td><%= patient.lastname.capitalize %></td>
+        <td>
+          <% if patient.current_schedule %>
+            <%= link_to patient.current_schedule.started_at, [patient, patient.current_schedule] %>
+          <% else %>
+            -
+          <% end %>
+        <td><%= patient.records.count %></td>
+        <td><%= link_to t(:view), patient %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%#- will_paginate @active_patients %>
+<% end %>

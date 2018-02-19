@@ -1,0 +1,38 @@
+<h1>Alert</h1>
+
+<% if @alerts.empty? %>
+  <h3>There is no alert</h3>
+  <%= link_to 'New Alert', new_alert_path %>
+<% else %>
+
+<h5>Level 1</h5>
+
+<div>
+Start alerting the patient <%= @alerts.first.minute_before_pill_time %> minutes before pill time with the text message: <b> <%= @alerts.first.message_before_pill_time %></b>
+</div>
+<div>
+At the pill time, alert the patient with the text message: <b><%= @alerts.first.message_on_pill_time %></b>
+</div>
+<div>
+<%= @alerts.first.minute_after_pill_time %> minutes after the pill time, alert the patient with the text message: <b><%= @alerts.first.message_after_pill_time %></b>. Repeat this alert every <%= @alerts.first.minute_after_pill_time %> minutes until a video received or pill time expired
+</div>
+
+
+
+<h5>Level 2</h5>
+If the patient is fully adherent for <%= @alerts.first.day_full_adherence %> days, alert the patient at the pill time with the message: <b><%= @alerts.first.message_full_adherence %></b>
+
+<h5>Level 3</h5>
+
+<div> If the patient is fully adherent for <%= @alerts.first.day_full_adherence2 %> days, no alerts at all </div>
+
+<div> If the patient misses <%= @alerts.first.number_time_missing_pill %> pill time, alert level reverts to level 1. </div>
+
+
+<%= link_to 'Edit', edit_alert_path(@alerts.first), class: 'button' %>
+
+<!--
+<%= link_to 'Destroy', @alerts.first, method: :delete, data: { confirm: 'Are you sure?' } %>
+-->
+<% end %>
+<br />

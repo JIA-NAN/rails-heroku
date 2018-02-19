@@ -1,0 +1,27 @@
+<h1><%= t(:side_effect_definitions)%></h1>
+
+<p><%= link_to t(:add_new_side_effect_definition), new_side_effect_path %></p>
+
+<% if @side_effects.empty? %>
+  <p><%= t(:there_is_no_side_effect)%></p>
+<% else %>
+
+<table class="fullwidth">
+  <tr>
+    <th><%= t(:name)%></th>
+    <th><%= t(:description)%></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @side_effects.each do |side_effect| %>
+  <tr>
+    <td><%= side_effect.name %></td>
+    <td><%= side_effect.description %></td>
+    <td><%= link_to t(:edit), edit_side_effect_path(side_effect) %></td>
+    <td><%= link_to t(:destroy), side_effect, method: :delete, data: { confirm: t(:are_you_sure) } %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>

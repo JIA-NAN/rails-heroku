@@ -1,0 +1,26 @@
+<h1><%= t(:listing_schedules)%></h1>
+
+<table>
+  <tr>
+    <th><%= t(:started_at)%></th>
+    <th><%= t(:terminated_at)%></th>
+    <th><%= t(:patient)%></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @schedules.each do |schedule| %>
+  <tr>
+    <td><%= schedule.started_at %></td>
+    <td><%= schedule.terminated_at %></td>
+    <td><%= link_to t(:show), [ schedule.patient, schedule ] %></td>
+    <td><%= link_to t(:edit), edit_patient_schedule_path(schedule.patient, schedule) %></td>
+    <td><%= link_to t(:destroy), [ schedule.patient, schedule ], method: :delete, data: { confirm: t(:are_you_sure) } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to t(:new_schedule), new_patient_schedule_path(current_patient) %>

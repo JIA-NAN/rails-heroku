@@ -1,0 +1,17 @@
+<table class="fullwidth">
+  <tr>
+    <th><%= t(:time)%></th>
+    <th><%= t(:amount)%></th>
+    <th><%= t(:balance)%></th>
+  </tr>
+  <% balance = 0 %>
+  <% @patient.wallet_transactions.each do |t|
+      balance += t.amount
+     %>
+  <tr>
+    <td><%= Ptime.to_human_readable(t.time) %></td>
+    <td><%= number_to_currency(t.amount, :unit => '$') %></td>
+    <td><%= number_to_currency(balance, :unit => '$') %></td>
+  </tr>
+  <% end %>
+</table>

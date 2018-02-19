@@ -1,0 +1,25 @@
+<h1>Submission Windows</h1>
+
+<% if @patients.empty? %>
+  <p>No patient has submission window open.</p>
+<% else %>
+  <table class="fullwidth" id="patient_list">
+    <tr>
+      <th>MIST ID</th>
+      <th>Patient</th>
+      <th>Pill Time</th>
+      <th>Info</th>
+    </tr>
+  <% @patients.each do |patient| %>
+    <tr>
+      <td><%= patient.mist_id %></td>
+      <td><%= link_to patient.fullname, patient %></td>
+      <td><%= Ptime.to_human_readable(patient.current_pill_time) %></td>
+      <td>
+        <%= patient.current_pill_time < Time.zone.now ? "Passed " : "Due in " %>
+        <%= time_ago_in_words patient.current_pill_time %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+<% end %>

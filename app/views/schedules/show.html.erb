@@ -1,0 +1,135 @@
+<h1><%= link_to @patient.fullname, @patient %>'s Schedule</h1>
+
+<h3>Schedule Info</h3>
+<table class="fullwidth">
+  <tr>
+    <th>Started At</th>
+    <td><%= @schedule.started_at %></td>
+    <th>Terminated At</th>
+    <td><%= @schedule.terminated_at || "No Termination Date" %></td>
+    <td colspan="2">
+      <%= link_to 'Edit Schedule', edit_patient_schedule_path(@patient, @schedule) %>
+    </td>
+  </tr>
+</table>
+
+<h3>Pill Times</h3>
+<table class="fullwidth">
+  <tr>
+    <th>#</th>
+    <th>Mon</th>
+    <th>Tue</th>
+    <th>Wed</th>
+    <th>Thu</th>
+    <th>Fri</th>
+    <th>Sat</th>
+    <th>Sun</th>
+    <th>Medicine</th>
+  </tr>
+<% @schedule.pill_times.each_with_index do |ptime, idx| %>
+  <tr>
+    <td><%= idx %></td>
+    <% [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].each do |day| %>
+      <td><%= Ptime.to_human_readable ptime[day] %></td>
+    <% end %>
+    <td><%= ptime.medicines.map(&:name).to_sentence %></td>
+  </tr>
+<% end %>
+</table>
+
+<h3>
+  Adherence Statistics
+  <small>Period <%= @statistic.started_at %> - <%= @statistic.terminated_at %></small>
+</h3>
+
+<div class="row">
+  <div class="large-6 columns">
+    <table class="fullwidth">
+      <tr class="header border-bottom">
+        <th colspan="2">Summary</th>
+      </tr>
+      <tr class="align-right">
+        <th>Video Received, Pending Grading</th>
+        <td><%= @statistic.received_pending %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Video Missing, Pending Grading</th>
+        <td><%= @statistic.missing_pending %></td>
+      </tr>
+
+      <tr class="align-right">
+        <th>Graded Records</th>
+        <td><%= @statistic.graded %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Missing Records</th>
+        <td><%= @statistic.missing %></td>
+      </tr>
+      <tr class="footer border-top align-right">
+        <th>Submitted Records</th>
+        <td><%= @statistic.submitted %></td>
+      </tr>
+      <tr class="footer border-top align-right">
+        <th>Expected Records</th>
+        <td><%= @statistic.expected %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="large-6 columns">
+    <table class="fullwidth">
+      <tr class="header border-bottom align-right">
+        <th>Submitted Records Summary</th>
+        <td><%= @statistic.received %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Satisfactory</th>
+        <td><%= @statistic.graded_satisfactory %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Unsatisfactory</th>
+        <td><%= @statistic.graded_unsatisfactory %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Not Sure</th>
+        <td><%= @statistic.graded_notsure %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Pending</th>
+        <td><%= @statistic.received_pending %></td>
+      </tr>
+
+    </table>
+    <table class="fullwidth">
+      <tr class="header border-bottom align-right">
+        <th>Missing Records Summary</th>
+        <td><%= @statistic.missing %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Technical Issues</th>
+        <td><%= @statistic.excused_tech_issue %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Others</th>
+        <td><%= @statistic.excused_others %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Unknown</th>
+        <td><%= @statistic.excused_unknown %></td>
+      </tr>
+      <tr class="align-right">
+        <th>Pending</th>
+        <td><%= @statistic.missing_pending %></td>
+      </tr>
+
+    </table>
+  </div>
+<% if @schedule %>
+<div class="row">
+  <div class="large-12 columns">
+  <div class="patient-charts">
+    <%= render partial: "patients/charts", locals: { patient: @schedule.patient, schedule: @schedule } %>
+  </div>
+  </div>
+</div>
+<% end %>
+</div>

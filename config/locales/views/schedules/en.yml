@@ -1,0 +1,13 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  editing_schedule: "Editing schedule"
+  listing_schedules: "Listing schedules"
+  started_at: "Started at"
+  terminated_at: "Terminated at"
+  patient: "Patient"
+  new_schedule: 'New Schedule'
+  new_schedule_for: "New Schedule for %{patient}"
+  
+

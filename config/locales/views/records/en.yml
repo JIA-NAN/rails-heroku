@@ -1,0 +1,12 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  view_record: "View Record"
+  grade: "Grade"
+  new_record: "New record"
+  start_record: "Start Record"
+  stop_record: "Stop Record"
+  view_and_grade_record: "View and Grade Record"
+  
+

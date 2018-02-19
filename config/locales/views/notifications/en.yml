@@ -1,0 +1,27 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  edit_notification: "Edit Notification"
+  notifications: "Notifications"
+  create_new_notification: 'Create New Notification'
+  there_is_no_scheduled_notification: "There is no scheduled notification."
+  type: "Type"
+  receiver: "Receiver"
+  time: "Time"
+  state: "State"
+  sent: "Sent"
+  waiting: "Waiting"
+  view: 'View'
+  edit: "Edit"
+  are_you_sure: 'Are you sure?'
+  add_new_notification: "Add New Notification"
+  back: 'Back'
+  scheduled_notification: "Scheduled Notification"
+  deliver_id: "Deliver Id"
+  to_send_at: "To Send At:"
+  message: "Message"
+  
+
+  
+

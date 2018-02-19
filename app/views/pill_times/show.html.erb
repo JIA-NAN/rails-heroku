@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Monday:</b>
+  <%= @pill_time.monday %>
+</p>
+
+<p>
+  <b>Tuesday:</b>
+  <%= @pill_time.tuesday %>
+</p>
+
+<p>
+  <b>Wednesday:</b>
+  <%= @pill_time.wednesday %>
+</p>
+
+<p>
+  <b>Thursday:</b>
+  <%= @pill_time.thursday %>
+</p>
+
+<p>
+  <b>Friday:</b>
+  <%= @pill_time.friday %>
+</p>
+
+<p>
+  <b>Saturday:</b>
+  <%= @pill_time.saturday %>
+</p>
+
+<p>
+  <b>Sunday:</b>
+  <%= @pill_time.sunday %>
+</p>
+
+
+<%= link_to t(:edit), edit_pill_time_path(@pill_time) %> |
+<%= link_to t(:back), pill_times_path %>

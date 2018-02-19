@@ -1,0 +1,8 @@
+<%= simple_form_for([grade.record, grade]) do |f| %>
+  <%= f.input :record_id, as: :hidden, value: grade.record.id %>
+  <%= f.input :pill_taken, collection: Grade::PILL_TAKEN_TYPES %>
+  <%= f.input :explanation, collection: Grade::EXPLANATION_TYPES , label: "Technical issues?" %>
+  <%= f.input :comment, label: t(:feedback_to_patient), input_html: {rows: 3} %>
+  <%= f.input :note, label: t(:private_notes), input_html: {rows: 3} %>
+  <%= f.submit t(:save_grade), :class => "button" %>
+<% end %>

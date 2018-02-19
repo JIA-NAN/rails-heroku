@@ -1,0 +1,21 @@
+<h2><%=t (:sign_in_as_user) %></h2>
+
+<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <%= f.input :login, autofocus: true, label: t(:login_id) %>
+  <%= f.input :password %>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="row">
+      <div class="small-1 columns">
+        <%= f.check_box :remember_me %>
+      </div>
+      <div class="small-11 columns">
+        <%= f.label :remember_me  %>
+      </div>
+    </div>
+  <% end %>
+
+  <div><%= f.submit t(:sign_in), :class => "button" %></div>
+
+  <%= render "patients/shared/links" %>
+<% end %>

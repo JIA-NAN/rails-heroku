@@ -1,0 +1,24 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  instruction: "Instruction"
+  set_as_default_recording_instruction: "Set as Default Recording Instruction"
+  steps: "Steps"
+  add_a_new_step: "Add a new step"
+  save_recording_instruction: "Save Recording Instruction"
+  pick_one_pill_sequence: "Pick One Pill Sequence"
+  name: "Name"
+  default: "Default"
+  yes_text: "Yes"
+  no_text: "no"
+  steps: "Steps"
+  step: "Step"
+  description: "Description"
+  editing_step_by_step: "Editing Step by Step Recording Instruction"
+  add_new_recording_instructions: "Add New Recording Instruction"
+  step_by_step_recording_instructions: "Step by Step Recording Instruction"
+  name: "Name"
+  
+
+

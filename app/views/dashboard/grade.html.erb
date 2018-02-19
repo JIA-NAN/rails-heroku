@@ -1,0 +1,9 @@
+<% if @records.empty? %>
+  <p>No records available.</p>
+<% elsif params[:received] == 'false' %>
+    <%= render partial: "missing_records", locals: { patient: @patient, records: @records }  %>
+  <%-# will_paginate @records %>
+<% else %>
+  <%= render partial: "records", locals: { table_id: 'record_list', patient: @patient, records: @records }  %>
+  <%-# will_paginate @records %>
+<% end %>

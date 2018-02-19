@@ -1,0 +1,16 @@
+<div id="record-modal" class="reveal-modal">
+  <div id="record-modal-title">
+    <h3 class="loading"><span class="anim-spinner"></span> <%= t(:we_are_submitting_your_record)%></h3>
+  </div>
+  <div id="record-modal-body">
+    <%= simple_form_for([current_patient, @record],
+                        html: { multipart: true, class: "custom" }) do |f| %>
+      <%= f.association :side_effects, as: :check_boxes,
+                                       label: t(:did_you_experience_any_side_effect) %>
+      <%= f.input :comment, label: t(:if_you_experienced_any_other_side_effect) %>
+    <% end %>
+  </div>
+  <div id="record-modal-footer">
+    <button id="close-modal-btn" class="hidden button"><%= t(:close)%></button>
+  </div>
+</div>

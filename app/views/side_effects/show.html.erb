@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b><%= t(:name)%>:</b>
+  <%= @side_effect.name %>
+</p>
+
+<p>
+  <b><%= t(:description)%>:</b>
+  <%= @side_effect.description %>
+</p>
+
+
+<%= link_to t(:edit), edit_side_effect_path(@side_effect) %> |
+<%= link_to t(:back), side_effects_path %>

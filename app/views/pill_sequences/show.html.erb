@@ -1,0 +1,30 @@
+<h1><%= t(:step_by_step_recording_instructions)%></h1>
+
+<p>
+  <b><%= t(:name)%>:</b>
+  <%= @sequence.name %>
+</p>
+
+<p>
+  <b><%=t(:default)%>:</b>
+  <%= @sequence.default? ? t(:yes_text) : t(:no_text) %>
+</p>
+
+<h2><%= t(:steps)%></h2>
+
+<table>
+  <tr>
+    <th><%= t(:step) %></th>
+    <th><%= t(:description)%></th>
+  </tr>
+
+<% @sequence.steps.each do |step| %>
+  <tr>
+    <td><%= step.step_no %></td>
+    <td><%= step.name %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to t(:edit), edit_pill_sequence_path(@sequence) %> |
+<%= link_to t(:back), pill_sequences_path %>

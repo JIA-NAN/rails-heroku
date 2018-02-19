@@ -1,0 +1,16 @@
+  <table>
+    <tr>
+      <td><b>Face Recognition Score</b></td>
+      <td><%= auto_grade.face_recognition_score %></td>
+    </tr>
+    <tr>
+      <td><b>Face Recognized?</b></td>
+      <td><%= auto_grade.is_face_recognized %></td>
+    </tr>
+    <% if auto_grade.is_face_recognized %>
+    <tr>
+      <td><b>Meds Taken?</b></td>
+      <td><% if auto_grade.is_pill_taken? %>Yes<% else %>No<% end %></td>
+    </tr>
+    <% end %>
+  </table>

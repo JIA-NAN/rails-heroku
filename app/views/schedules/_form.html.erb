@@ -1,0 +1,180 @@
+<%= simple_form_for([@schedule.patient, @schedule], html: { class: "custom" }) do |f| %>
+  <% if @schedule.errors.any? %>
+    <div data-alert class="alert alert-box">
+      <%= pluralize(@schedule.errors.count, "error") %> prohibited this schedule from being saved:
+
+      <ul class="square">
+      <% @schedule.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="large-6 columns">
+      <h3>Schedule Info</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-8 columns">
+      <div class="row">
+        <div class="small-4 columns">
+          <h5>Started At</h5>
+        </div>
+        <div class="small-8 columns">
+          <input type="date" id="started-at" name="schedule[started_at]" value="<%= @schedule.started_at || Date.today %>" >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% if @schedule.terminated_at.nil? %>
+    <div class="row">
+      <div class="large-6 columns">
+        <button class="small button terminated-at">Enter Termination Date</button>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row <%= "hidden" if @schedule.terminated_at.nil? %> terminated-at">
+    <div class="large-8 columns">
+      <div class="row">
+        <div class="small-4 columns">
+          <h5>Terminated At</h5>
+        </div>
+        <div class="small-8 columns">
+          <input type="date" id="terminated-at" name="schedule[terminated_at]" value="<%= @schedule.terminated_at %>" >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pill-times">
+    <div class="row">
+      <div class="large-3 columns">
+        <h3>Pill Times</h3>
+      </div>
+      <div class="large-9 columns">
+      </div>
+    </div>
+
+    <% @pill_times.each_with_index do |pill_time, idx| %>
+      <div class="pill-time">
+        <div class="row">
+          <div class="large-12 columns">
+            <button class="small alert button remove-pill-time">Remove</button>
+            <h4>Pill Time Slot <%= idx + 1 %></h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row">
+              <div class="large-2 small-12 columns"><h5>Time</h5></div>
+              <div class="large-1 small-3 columns">
+                <label class="right inline">Set All</label>
+              </div>
+              <div class="large-3 small-9 columns">
+                <input type="text" placeholder="0900" class="pill-time-all">
+              </div>
+              <div class="large-6 small-12 columns">
+                <label class="inline">In 24 Hours format (e.g. from 0000 to 2359)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row">
+              <div class="large-2 small-12 columns">
+                &nbsp;
+              </div>
+              <div class="large-1 small-1 columns">
+                <label class="right inline">Mon</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][monday]" value="<%= format_time pill_time[:monday] %>">
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Tue</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][tuesday]" value="<%= format_time pill_time[:tuesday] %>">
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Wed</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][wednesday]" value="<%= format_time pill_time[:wednesday] %>">
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Thu</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][thursday]" value="<%= format_time pill_time[:thursday] %>">
+              </div>
+              <div class="large-2 small-12 columns">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row">
+              <div class="large-2 small-12 columns">
+                &nbsp;
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Fri</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][friday]" value="<%= format_time pill_time[:friday] %>">
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Sat</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][saturday]" value="<%= format_time pill_time[:saturday] %>">
+              </div>
+              <div class="large-1 small-1 columns">
+                <label for="right-label" class="right inline">Sun</label>
+              </div>
+              <div class="large-1 small-2 columns">
+                <input type="text" class="pill-time-hours" name="pill_time[][sunday]" value="<%= format_time pill_time[:sunday] %>">
+              </div>
+              <div class="large-4 small-12 columns">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <div class="row">
+              <div class="large-2 columns"><h5>Medicines</h5></div>
+              <div class="large-10 columns medicine-columns">
+              <% Medicine.all.each do |m| %>
+                <%= check_box_tag "pill_time[][medicine_ids][]",
+                                  m.id, pill_time.medicines.include?(m) %>
+                <%= m.name %>
+              <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <button class="small button" id="add-pill-time">Add New Pill Time Slot</button>
+
+  <div><%= f.submit "Save Schedule", :class => "success button" %></div>
+<% end %>
+
+<% content_for :javascript do %>
+  <%= javascript_include_tag "schedules" %>
+<% end %>

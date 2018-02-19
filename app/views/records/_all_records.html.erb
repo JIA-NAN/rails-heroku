@@ -1,0 +1,70 @@
+<%# local variables: records -- list of all records, table_id -- id for this table %>
+<% disable_delete = local_assigns.has_key?(:disable_delete) ? disable_delete : false %>
+
+<% if table_id
+     id = table_id
+   else
+     id = "record_list"
+   end
+%>
+<% if admin_signed_in? %>
+<%# can't see anything if not admin %>
+<table class="fullwidth" id="<%= id %>">
+  <thead>
+    <th>Patient</th>
+    <th>Scheduled Time</th>
+	<th data-sortable="false"></th><%# has video? %>
+	<th data-sortable="false"></th><%# graded? %>
+    <th>Status</th>
+    <th>Med Time</th>
+    <th data-sortable="false">View</th>
+  <% if !disable_delete %>
+    <th data-sortable="false"></th>
+  <% end %>
+</thead>
+
+  <% records.each do |record| %>
+    <% record_patient = patient || record.patient %>
+	<% if record.received == false
+		status = display_grade(record)
+	else
+		status = record.received
+	end
+	%>
+
+    <tr id="<%= dom_id(record) %>" class="<%= status %>">
+    <td>
+      <%= render partial: 'patients/name', locals: {:patient => record_patient} %>
+    </td>
+    <td>
+      <%= localtime record.pill_time_at %>
+    </td>
+    <td>
+	  <% if record.received %><span data-tooltip class="has-tip" title="Video submitted"><i class="fi-video medium"></i></span><% end %>
+	</td>
+	<td>
+	  <% if record.graded %><span data-tooltip class="has-tip" title="Record graded"><i class="fi-checkbox medium"></i></span><% end %>
+	</td>
+	<td class="<%= status %>">
+	  <%= display_grade(record) %>
+	</td>
+    <td>
+	  <% if record.received %>
+      <span data-tooltip class="has-tip" title="<%= pill_taking_time_diff(record) %>">
+        <%= localtime record.actual_pill_time_at %>
+      </span>
+      <% end %>
+    </td>
+	<td><%= link_to patient_record_path(record_patient, record) do %><i class="fi-eye medium"></i><% end %></td>
+    <% if !disable_delete %>
+      <td>
+        <%= link_to 'X'.html_safe, [record_patient, record],
+          method: :delete,
+          data: { confirm: 'Are you sure to delete this record?' },
+          remote: true %>
+      </td>
+    <% end %>
+    </tr>
+  <% end %>
+</table>
+<% end %>

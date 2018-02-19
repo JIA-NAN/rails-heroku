@@ -1,0 +1,28 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  note_from_doctor: "Note from Doctor:"
+  alert: "Alert"
+  browser_alert: "Your browser does not support video or audio recording as required. Please download and use the latest"
+  submit_record: "Submit Record"
+  next_step: "Next Step"
+  start_recording: "Start Recording"
+  submit_record: "Submit Record"
+  lighting: "Lighting"
+  tracker: "Tracker"
+  position: "Position"
+  judged: "Judged"
+  request_to_access_your_webcam: "Request to access your webcam."
+  you_have_submitted_all_records_today: "You have submitted all records today."
+  your_next_pill_is_at: "Your next pill is at "
+  todays_record_history: "Today's record History"
+  no_record_submitted_today: "No record submitted today."
+  view_all_record_history: "View All Record History"
+  we_are_submitting_your_record: "We are submitting your record."
+  did_you_experience_any_side_effect: "Did you experienced any side effects?"
+  if_you_experienced_any_other_side_effect: "If you experienced any other side effects, please write below:"
+  close: "Close"
+  you_do_not_have_any_schedule: "You do not have any schedule."
+  please_contact_your_doctor: "Please contact your doctor if you have any doubts."
+

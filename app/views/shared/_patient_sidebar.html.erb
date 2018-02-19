@@ -1,0 +1,28 @@
+<h3>Hello, <%= current_patient.firstname %></h3>
+<% if false %>
+
+<ul class="side-nav">
+  <li><%= link_to t(:submit_record), root_path %></li>
+  <li class="divider"></li>
+  <li><%= link_to(t(:view_missing_records), records_path(filter: Record::MISSING)) %></li>
+  <li><%= link_to t(:view_record_history), records_path %></li>
+  <li class="divider"></li>
+  <li><%= link_to(t(:manage_account), edit_patient_registration_path) %></li>
+</ul>
+<% end %>
+<% content_for :sidebar do %>
+  <% current_schedule = current_patient.current_schedule %>
+  <% if not current_schedule.nil? %>
+    <table class="fullwidth">
+      <tr><th colspan="2"><%=t(:your_schedule)%></th></tr>
+      <% [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday].each do |day| %>
+        <tr class="<%= Ptime.weekday_today == day.to_s ? 'current-pill-time' : '' %>">
+          <td><%= day[0..2].capitalize %></td>
+          <td><%= pill_time current_schedule, day %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <p><%=t(:you_do_not_have_any_schedule)%></p>
+  <% end %>
+<% end %>

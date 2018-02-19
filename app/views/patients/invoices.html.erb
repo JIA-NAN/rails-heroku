@@ -1,0 +1,67 @@
+<h1><%= t(:invoices)%></h1>
+
+<% if admin_signed_in? %>
+
+
+<h2><%= t('patient_name', fullname: @patient.fullname) %></h2>
+
+<div class="row">
+  <div class="patient-info small-12 large-6 columns">
+    <h3><%= t(:account_info)%></h3>
+    <table class="fullwidth">
+      <tr>
+        <td><b><%= t(:login_id)%></b></td>
+        <td><%= @patient.mist_id %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:notification)%>:</b></td>
+        <td><%= array(@patient.notification_services, :name, 'No') %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:wallet_ballance)%>:</b></td>
+        <% if @patient.wallet_balance %>
+        <td><%= link_to number_to_currency(@patient.wallet_balance, :units => '$'), patient_wallet_transactions_path(@patient) %></td>
+        <% else %>
+        <td><%= link_to number_to_currency(0), patient_wallet_transactions_path(@patient) %></td>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+
+<div class="patient-schedule">
+  <h2><%= t(:schedules)%></h2>
+
+  <table class="fullwidth">
+    <thead>
+      <tr>
+        <th>ID </th>
+        <th><%= t(:started_time)%></th>
+        <th><%= t(:terminated_time)%></th>
+        <th><%= t(:pill_times)%></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </td>
+    </thead>
+    <tbody>
+      <% @patient.schedules.order('started_at DESC').each do |schedule| %>
+        <tr>
+          <td><%= link_to schedule.id, [schedule.patient, schedule] %></td>
+          <td><%= schedule.started_at %></td>
+          <td><%= schedule.terminated_at %></td>
+          <td><%= schedule.pill_times.length %></td>
+          <td>  <%= link_to "Show",  patient_invoice_path(@patient, format: "html", schedule_id: schedule.id)%> </td>
+          <td>  <%= link_to "PDF",  patient_invoice_path(@patient, format: "pdf", schedule_id: schedule.id)%>    </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  
+</div>
+
+
+
+<% end %>

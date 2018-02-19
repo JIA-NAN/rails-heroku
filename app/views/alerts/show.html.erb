@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+<h3>Level 1</h3>
+<p>
+Start alerting the patient <b><%= @alert.minute_before_pill_time %></b> minutes before pill time with the
+text message: <b><%= @alert.message_before_pill_time %></b>.
+</p>
+<p>
+At the pill time, alert the patient with the text message: <b><%= @alert.message_on_pill_time %></b>
+</p>
+<p>
+<b><%= @alert.minute_after_pill_time %></b> minutes after the pill time, alert the patient with
+the text message: <b><%= @alert.message_after_pill_time %></b>.
+Repeat this alert every <b><%= @alert.minute_after_pill_time %></b> minutes until a video received
+or pill time expired.
+</p>
+
+<h3>Level 2</h3>
+<p>
+If the patient is fully adherent for <b><%= @alert.day_full_adherence %></b> days,
+alert the patient at the pill time with the message: <b><%= @alert.message_full_adherence %></b>.
+</p>
+
+<h3>Level 3</h3>
+<p>If the patient is fully adherent for <%= @alert.day_full_adherence2 %> days, no alerts at all.
+</p>
+<p>If the patient misses <%= @alert.number_time_missing_pill %> pill time, alert level reverts to
+Level 1. </p>
+
+
+<%= link_to 'Edit', edit_alert_path(@alert), class: 'button' %>

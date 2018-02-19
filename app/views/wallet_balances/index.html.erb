@@ -1,0 +1,16 @@
+<h1><%= t(:wallets)%></h1>
+<table class="fullwidth">
+  <tr>
+    <th><%= t(:name)%></th>
+    <th><%= t(:balance)%></th>
+    <th></th>
+  </tr>
+
+<% @wallet_balances.each do |wb| %>
+  <tr>
+    <td><%= render partial: 'patients/name', locals: {:patient => wb.patient} %></td>
+    <td><%= number_to_currency(wb.balance, :units => '$') %></td>
+    <td><%= t(:pay)%></td>
+  </tr>
+<% end %>
+</table>

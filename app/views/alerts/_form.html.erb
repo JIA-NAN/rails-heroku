@@ -1,0 +1,70 @@
+<%= simple_form_for(@alert) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="row">
+  <h3>Level 1</h3>
+  <table>
+  	<tr>
+  		<td>Start alerting the patient</td>
+  		<td><%= f.input :minute_before_pill_time, input_html: { required: true } , label: false, :size=>'3' %> </td>
+  		<td>minutes before the pill time </td>
+  	</tr>
+
+  	<tr>
+  		<td>with the text message: </td>
+  		<td colspan='2'><%= f.input :message_before_pill_time, require: true, placeholder: "", label: false%></td>
+  	</tr>
+
+    <tr>
+      <td>At the pill time, alert the patient with the text message: </td>
+      <td colspan='2'><%= f.input :message_on_pill_time, require: true, placeholder: "", label: false%></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td><%= f.input :minute_after_pill_time, input_html: { required: true } , label: false, size: '3' %> </td>
+      <td colspan='2'> minutes after the pill time, alert the patient with the text message:</td>
+     </tr>
+     <tr>
+     <td><%= f.input :message_after_pill_time, require: true, placeholder: "", label: false %></td>
+     <td colspan='2'> Repeat this alert until a video received or pill time expired.</td>
+    </tr>
+  </table>
+
+  <h3>Level 2</h3>
+   <table>
+    <tr>
+      <td>If the patient is fully adherent for </td>
+      <td><%= f.input :day_full_adherence, input_html: { required: true } , label: false %> </td>
+      <td> days</td>
+      </tr>
+      <tr>
+      <td>alert the patient at the pill time with the message </td>
+      <td colspan='2'><%= f.input :message_full_adherence, require: true, placeholder: "", label: false %></td>
+    </tr>
+  </table>
+   <h3>Level 3</h3>
+    <table>
+    <tr>
+      <td>If the patient is fully adherent for </td>
+      <td><%= f.input :day_full_adherence2, input_html: { required: true } , label: false%> </td>
+      <td> days</td>
+      </tr>
+      <tr>
+      <td colspan='3'>no alerts at all.</td>
+    </tr>
+  </table>
+   <h3>Revert</h3>
+    <table>
+    <tr>
+      <td>If the patient misses </td>
+      <td><%= f.input :number_time_missing_pill, input_html: { required: true } , label: false %> </td>
+      <td> pill time, alert level reverts to level 1.</td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

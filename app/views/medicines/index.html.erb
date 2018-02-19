@@ -1,0 +1,27 @@
+<h1><%= t(:medicines)%></h1>
+
+<p><%= link_to t(:add_new_medicine), new_medicine_path %></p>
+
+<% if @medicines.empty? %>
+  <p><%= t(:there_is_no_medicines)%></p>
+<% else %>
+
+<table class="fullwidth">
+  <tr>
+    <th><%= t(:name)%></th>
+    <th><%= t(:description)%></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @medicines.each do |medicine| %>
+  <tr>
+    <td><%= medicine.name %></td>
+    <td><%= medicine.description %></td>
+    <td><%= link_to t(:edit), edit_medicine_path(medicine) %></td>
+    <td><%= link_to t(:destroy), medicine, method: :delete, data: { confirm: t(:are_you_sure) } %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>

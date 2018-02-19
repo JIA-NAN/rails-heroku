@@ -1,0 +1,65 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  resend_confirmation_instructions: "Resend confirmation instructions"
+  editing_patient_information: "Editing patient information"
+  patients: "Patients"
+  add_new_patient: "Add New Patient"
+  no_active_patient_available: "No active patient available."
+  id: "ID"
+  first_name: "First Name"
+  last_name: "Last Name"
+  schedule: "Schedule"
+  records: "Records"
+  view: "View"
+  welcome: "Welcome"
+  you_can_confirm_your_account: "You can confirm your account email through the link below:"
+  confirm_my_account: 'Confirm my account'
+  hello_email: "Hello %{email}!"
+  someone_has_requested: "Someone has requested a link to change your password. You can do this through the link below."
+  if_you_do_not_request_this: "If you didn't request this, please ignore this email."
+  your_password_will_not_change: "Your password won't change until you access the link above and create a new one."
+  change_my_password: 'Change my password'
+  your_account_has_been_locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
+  click_the_link_below: "Click the link below to unlock your account:"
+  unlock_my_account: 'Unlock my account'
+  new_patient: "New patient"
+  change_your_password: "Change your password"
+  change_my_password: "Change my password"
+  edit_your_account: "Edit Your Account"
+  login_id: "Login ID"
+  leave_blank_if_you: "Leave blank if you don't want to change it"
+  we_need_your_current_password: "We need your current password to confirm your changes"
+  new_password: "New Password"
+  update: "Update"
+  create_a_patient_account: "Create a Patient Account"
+  create: "Create"
+  resend_unlock_instructions: "Resend unlock instructions"
+  patient_name: "Patient: %{fullname}"
+  account_info: "Account Info"
+  login_id: "Login ID:"
+  full_name: "Fullname"
+  phone: "Phone"
+  notification: "Notification"
+  wallet_ballance: "Wallet Balance"
+  schedule_statistics: "Schedule Statistics"
+  current_schedule: "Current Schedule"
+  today_next_record_time: "Today's Next Record Time"
+  today_submission: "Today's Submission"
+  no_schedule_available: "No Schedule Available"
+  send_notification: 'Send Notification'
+  edit_patient_account: 'Edit Patient Account'
+  delete_patient: 'Delete Patient'
+  are_you_sure: 'Are you sure?'
+  schedules: "Schedules"
+  started_time: "Started Time"
+  terminated_time: "Terminated Time"
+  pill_times: "Pill Times"
+  show: 'Show'
+  edit: 'Edit'
+  new_schedule: 'New Schedule'
+  patient_records: "Records"
+  view_all_records: 'View All Records'
+  wallet_transactions: "Wallet Transactions"
+  calendar: "Calendar"

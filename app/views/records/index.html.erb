@@ -1,0 +1,51 @@
+<% if @patient %>
+  <h1>Records from <%= link_to @patient.fullname, @patient %></h1>
+<% else %>
+  <% if params[:received] == 'false'
+	if params[:graded] == 'true'
+		title = "Graded Records with Missing Video"
+	  elsif params[:graded] == 'false'
+		  title = "Records with Missing Video That Needs Grading"
+	  else
+		  title = "Records with Missing Video"
+	  end
+  elsif params[:received] == 'true'
+	  if params[:graded] == 'true'
+		  title = "Submitted Video That are Graded"
+	  elsif params[:graded] == 'false'
+		  title = "Submitted Videos that Needs Grading"
+	  else
+		  title = "Submitted Videos"
+	  end
+  else
+	  title = "All Records"
+  end %>
+  <h1><%= title %></h1>
+<% end %>
+
+<p>
+<a href='?'> All </a> |
+<b><a href='?received=true'>Video Submitted</a>:</b>
+<a href='?received=true&graded=false'>Pending</a>
+<a href='?received=true&graded=true'>Graded</a> |
+<b><a href='?received=false'>Video Missing</a>:</b>
+<a href='?received=false&graded=false'>Pending</a>
+<a href='?received=false&graded=true'>Graded</a>
+</p>
+
+<% if params[:received] == 'false' %>
+  <%= render partial: 'missing_records',
+             locals: { patient: @patient,
+                       records: @records.select { |r| r.received == false }
+                      }  %>
+	<%-# will_paginate @records %>
+<% elsif params[:received] == 'true' %>
+  <%= render partial: 'received_records',
+             locals: { table_id: 'record_list',
+                       patient: @patient,
+                       records: @records.select { |r| r.received == true }
+                      } %>
+  <%-# will_paginate @records %>
+<% else %>
+  <%= render partial: "all_records", locals: { table_id: 'record_list', patient: @patient, records: @records }  %>
+<% end %>

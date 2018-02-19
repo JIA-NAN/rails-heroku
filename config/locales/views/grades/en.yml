@@ -1,0 +1,15 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  explanation: "Explanation"
+  feedback_to_patient: "Feedback to Patient"
+  private_notes: "Private Note"
+  save_grade: "Save Grade"
+  pill_taken: "Pill Taken"
+  graded_by: "Graded By:"
+  feedback: "Feedback"
+  edit_grading: "Edit Grading"
+  delete: "Delete"
+  are_you_sure: "Are you sure?"
+

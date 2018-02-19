@@ -1,0 +1,15 @@
+<div>
+  Patient <%= @patient.fullname %> (<%= @patient.mist_id %>) has a balance of <b><%= number_to_currency(@patient.wallet_balance) %></b>.
+</div>
+<div>
+How much do you want to pay?
+</div>
+<%= simple_form_for([@patient, @wallet_transaction]) do |f| %>
+  <%= f.error_notification %>
+  <div class="form-inputs">
+    <%= f.input :amount, :input_html => { :value => number_to_currency(@patient.wallet_balance, unit: "") } %></div>
+
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
+<% end %>

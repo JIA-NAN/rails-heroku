@@ -1,0 +1,175 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ * gem rails-assets-DataTables
+ *= require DataTables 
+ *= require_self
+ *= require foundation
+ *= require_tree .
+ */
+
+@import 'foundation_and_overrides';
+@import 'foundation-icons';
+
+.top-bar {
+	font-family: "Roboto Slab", "Helvetica", Arial, sans-serif;
+	a {
+		color: #fff;
+	}
+	a:hover {
+		color: #ccc;
+	}
+}
+.top-bar-title {
+	font-size: larger;
+	font-family: "Roboto Slab", "Helvetica", Arial, sans-serif;
+}
+.heading, .side-nav, .top-bar {
+	font-family: "Helvetica", Arial, sans-serif;
+}
+.heading {
+	font-weight: bold;
+	margin-bottom: 6px;
+	margin-top: 6px;
+}
+
+.menu {
+	.heading a {
+		padding: 0px;
+	}
+}
+.heading i {
+	font-size: 1.2em;
+}
+
+i.large {
+	font-size: 32px;
+	color: rgba(0,0,0,0.4);
+}
+
+.side-nav-item {
+		padding-left: 1.3em;
+}
+
+/* SUB NAV replacement for F6 */
+/* Based on http://codepen.io/rafibomb/pen/yeMaYV?editors=110 */
+
+.sub-nav {
+	padding: 0.5rem 0.5rem 0.5rem 0;
+
+  li {
+    &.active a {
+      border-radius: 3px;
+      background: #008CBA;
+      color: #fff;
+      cursor: default;
+      padding: 0.16667rem 0.88889rem;
+    }
+  }
+}
+
+/* CALENDAR */
+.simple-calendar {
+  table {
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid rgb(221, 221, 221);
+    border-collapse: collapse;
+    box-sizing: border-box;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  tr {
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 6px;
+    border-bottom: 2px solid rgb(221, 221, 221);
+    border-collapse: collapse;
+    border-left: 1px solid rgb(221, 221, 221);
+    border-right: 1px solid rgb(221, 221, 221);
+    border-top: 0px none rgb(51, 51, 51);
+    box-sizing: border-box;
+    text-align: left;
+  }
+
+  td {
+    padding: 0px;
+    vertical-align: top;
+		text-align: center;
+    width: 14%;
+
+    border: 1px solid #ddd;
+    border-top-color: rgb(221, 221, 221);
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-color: rgb(221, 221, 221);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: rgb(221, 221, 221);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgb(221, 221, 221);
+    border-left-style: solid;
+    border-left-width: 1px;
+  }
+  div.adherence_cell {
+		height: 100%;
+		padding: 6px;
+	}
+  div.na {
+		background-color: white;
+	}
+	div.yes {
+		background-color: #efe;
+	}
+
+	div.no {
+		background-color: #fee;
+	}
+	div.pending {
+		background-color: #eef;
+	}
+	div.partial {
+		background-color: #ffe;
+	}
+  .day {
+    height: 80px;
+  }
+
+  .wday-0 {}
+  .wday-1 {}
+  .wday-2 {}
+  .wday-3 {}
+  .wday-4 {}
+  .wday-5 {}
+  .wday-6 {}
+
+  .today {
+    background: #FFFFC0
+  }
+
+  .past {}
+  .future {}
+
+  .start-date {}
+
+  .prev-month {
+    background: #DDD;
+  }
+  .next-month {
+    background: #DDD;
+  }
+  .current-month {}
+
+  .has-events {}
+}

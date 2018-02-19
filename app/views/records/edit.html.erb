@@ -1,0 +1,7 @@
+<h1><%= t(:view_record)%></h1>
+
+<%= render 'record_admin' %>
+
+<h1><%= t(:grade)%></h1>
+
+<%= render partial: 'grades/form', locals: { grade: @grade } %>

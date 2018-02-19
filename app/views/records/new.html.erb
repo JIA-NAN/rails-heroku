@@ -1,0 +1,13 @@
+<h1><%= t(:new_record)%></h1>
+
+<%= render 'form' %>
+
+<div id="recorder">
+    <video id="client-video" autoplay="" loop="" controls="" muted=""></video>
+    <button id="start-record"><%= t(:start_record)%></button>
+    <button id="stop-record"><%= t(:stop_record)%></button>
+</div>
+
+<button id="ajax-submit"><%= t(:submit)%></button>
+
+<%= link_to t(:back), patient_records_path(@patient) %>

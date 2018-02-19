@@ -1,0 +1,468 @@
+// ==============================
+// general
+// ==============================
+.main-content {
+    margin-top: 1.875em;
+    margin-bottom: 1.875em;
+}
+
+.alert-box a {
+    color: #CCC;
+    text-decoration: underline;
+}
+
+.align-right {
+    text-align: right;
+}
+
+// ==============================
+// table row
+// ==============================
+
+tr {
+    &.warn:hover, &.pending:hover { background-color: #FCF8E3; }
+    &.trace:hover, &.graded:hover { background-color: #DFF0D8; }
+    &.onhold:hover { background-color: #D9EDF7; }
+    &.error:hover, &.missing:hover { background-color: #F2DEDE; }
+    &.excused:hover { background-color: #DFF0D8; }
+    &.debug:hover, &.onhold.excuse:hover { background-color: #D9EDF7; }
+    &.info:hover, &.verified:hover { background-color: #D9EDF7; }
+
+    &.header { background-color: #DFF0D8 !important; }
+    &.footer { background-color: #D9EDF7 !important; }
+
+    &.border-top {
+        td, th { border-top: 3px double gray; }
+    }
+
+    &.border-bottom {
+        td, th { border-bottom: 3px double gray; }
+    }
+
+    &.align-right {
+        td { text-align: right }
+    }
+}
+
+td, th {
+    &.warn, &.pending { background-color: #FCF8E3; color: #D3A462; }
+    &.trace, &.graded { background-color: #DFF0D8; color: #5CB85C; }
+    &.onhold { background-color: #D9EDF7; color: #428BCA; }
+    &.error, &.missing { background-color: #F2DEDE; color: #C36462; }
+    &.excused { background-color: #DFF0D8; color: #5CB85C; }
+    &.debug, &.onhold.excuse { background-color: #D9EDF7; color: #428BCA; }
+    &.info, &.verified { background-color: #D9EDF7; color: #6BB2C6; }
+}
+
+// ==============================
+// recording
+// ==============================
+#recording-steps {
+    font-size: 1.3em;
+
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+
+#recorder-container {
+    position: relative;
+    margin: 0 auto;
+}
+
+#recorder-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background: #efefef;
+    padding: 0.9375em;
+
+    &.notice {
+        color: #c60f13;
+        background-color: #FEDDDD;
+
+        width: 100%;
+        padding: 1em 2em 1.5em;
+        margin: 2em auto 0;
+    }
+
+    &.idle {
+        color: #999999;
+    }
+
+    &.recording {
+        color: #c60f13;
+    }
+
+    &.stop {
+        color: #457a1a;
+    }
+}
+
+#recorder-message {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    padding: 20px;
+    margin-left: -200px;
+    width: 400px;
+
+    background-color: #eee;
+    text-align: center;
+    font-size: 32px;
+    color: #BE1C1C;
+    z-index: 10;
+}
+
+#recorder-count {
+    color: #c60f13;
+    font-size: 10em;
+
+    height: 180px;
+    width: 100px;
+
+    position: absolute;
+    z-index: 9;
+    top: 50%;
+    left: 50%;
+
+    margin: 0 auto;
+    margin-left: -50px;
+    margin-top: -90px;
+}
+
+#recorder-face-zone {
+    border: 2px solid #ffffff;
+    border-radius: 900px;
+
+    height: 400px;
+    width: 280px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin: 0 auto;
+    margin-left: -140px;
+    margin-top: -230px;
+}
+
+#recorder-pill-zone {
+    border: 3px solid #00ff00;
+    border-radius: 100px;
+
+    position: relative;
+    top: 100%;
+    left: 0;
+
+    width: 50px;
+    height: 80px;
+
+    margin-top: -110px;
+    margin-left: -110px;
+}
+
+#recorder-face-mouth,
+#recorder-face-eye-left,
+#recorder-face-eye-right {
+    border: 2px dotted #bbb;
+    border-radius: 50px;
+
+    position: relative;
+    width: 120px;
+    height: 80px;
+}
+
+#recorder-face-eye-left {
+    top: 40%;
+    left: 50%;
+
+    margin-left: -130px;
+}
+
+#recorder-face-eye-right {
+    top: 20%;
+    left: 50%;
+
+    margin-left: 10px;
+}
+
+#recorder-face-mouth {
+    border-radius: 190px;
+
+    top: 35%;
+    left: 50%;
+    height: 60px;
+
+    margin-left: -60px;
+}
+
+#recorder-debug {
+    position: fixed;
+    bottom: 4px;
+    left: 5px;
+    z-index: 100;
+
+    width: 320px;
+    background-color: #F0C7A7;
+}
+
+#record-modal {
+    width: 50%;
+    margin-left: -25%;
+
+    #record-modal-title {
+        .loading {
+            color: #2ba6cb;
+        }
+
+        .succeed {
+            color: #5da423;
+        }
+
+        .failed {
+            color: #c60f13;
+        }
+    }
+}
+
+
+// ==============================
+// record grading
+// ==============================
+.record {
+    display: inline-block;
+    float: left;
+    width: 30%;
+    min-height: 240px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+
+    video {
+        width: 100%;
+        height: 100%;
+    }
+
+    textarea {
+        height: 62px;
+    }
+
+    .record-grade-tasks {
+        .sub-nav {
+            margin: 0 auto;
+        }
+    }
+
+    .record-task-panel {
+        padding: 0 10px;
+
+        p {
+            margin: 0;
+            max-height: 70px;
+        }
+        select {
+            margin-top: 10px;
+            font-size: 1.3em;
+        }
+    }
+
+    &.grade-require-verification {
+        background-color: #F8E8DE;
+    }
+
+    &.grade-unsatisfactory {
+        background-color: #FEDDDD;
+    }
+
+    &.grade-satisfactory {
+        background-color: #F2FFF4;
+    }
+}
+
+.grading-controls {
+    margin-top: 1.875em;
+}
+
+#record-sequence-steps {
+    .current-step a {
+        background-color: #F8E8DE;
+    }
+}
+
+// ==============================
+// schedule and pill time page
+// ==============================
+#pill-times {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .pill-time {
+        background: #efefef;
+        padding: 10px;
+        margin-bottom: 20px;
+
+        h4 {
+            display: inline-block;
+            margin-left: 10px;
+        }
+    }
+
+    div:nth-child(2) {
+        .remove-pill-time {
+            @extend .hidden
+        }
+    }
+}
+
+.medicine-columns {
+    padding-top: 8px !important;
+}
+
+// ==============================
+// record show page
+// ==============================
+
+.thumnail{
+    width: 100px;
+    margin-right:5px; 
+}
+
+video{
+    width: 320px;
+    height: 300px; 
+    background-color: black; 
+}
+
+
+.record-meta-steps {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+// ==============================
+// sequence management
+// ==============================
+.new-pill-sequence-step {
+    &:first-child {
+        .move-up {
+            @extend .hidden
+        }
+    }
+
+    &:last-child {
+        .move-down {
+            @extend .hidden
+        }
+    }
+}
+
+// ==============================
+// patient sidebar panel
+// ==============================
+.current-pill-time {
+    background-color: #868686 !important;
+    font-weight: bold;
+
+    td {
+        color: #fff;
+    }
+}
+
+// ==============================
+// helper css
+// ==============================
+table.fullwidth {
+    width: 100%;
+}
+
+.compact {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h1.compact {
+    font-size: 2.125em;
+}
+
+.narrow.button {
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+// ==============================
+// blinking div css
+// ==============================
+@-webkit-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1.0; }
+}
+@-moz-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1.0; }
+}
+@keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1.0; }
+}
+
+.anim-blink {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+// ==============================
+// loading div css
+// ==============================
+@-webkit-keyframes ajax-loader-rotate {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes ajax-loader-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes ajax-loader-rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.anim-spinner {
+    opacity: .8;
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 19px 9px;
+
+    font-size: 29px;
+    width: .25em;
+    height: .25em;
+
+    box-shadow: 0 -.4em       0 0 rgba(0,0,0,1),
+                -.28em -.28em 0 0 rgba(0,0,0,.75),
+                -.4em 0       0 0 rgba(0,0,0,.50),
+                -.28em .28em  0 0 rgba(0,0,0,.25);
+
+    -webkit-animation: .85s ajax-loader-rotate steps(8) infinite;
+    -moz-animation: .85s ajax-loader-rotate steps(8) infinite;
+    animation: .85s ajax-loader-rotate steps(8) infinite;
+}

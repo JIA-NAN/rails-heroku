@@ -1,0 +1,134 @@
+<% @patient.update_wallet %>
+<h2><%= t('patient_name', fullname: @patient.fullname) %></h2>
+
+<div class="row">
+  <div class="patient-info small-12 large-6 columns">
+    <h3><%= t(:account_info)%></h3>
+    <table class="fullwidth">
+      <tr>
+        <td><b><%= t(:login_id)%></b></td>
+        <td><%= @patient.mist_id %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:notification)%>:</b></td>
+        <td><%= array(@patient.notification_services, :name, 'No') %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:wallet_ballance)%>:</b></td>
+        <% if @patient.wallet_balance %>
+        <td><%= link_to number_to_currency(@patient.wallet_balance, :units => '$'), patient_wallet_transactions_path(@patient) %></td>
+        <% else %>
+        <td><%= link_to number_to_currency(0), patient_wallet_transactions_path(@patient) %></td>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+  <div class="patient-stats small-12 large-6 columns">
+    <h3><%= t(:schedule_statistics)%></h3>
+    <table class="fullwidth">
+      <% if @patient.current_schedule %>
+        <tr>
+          <td><b><%= t(:current_schedule)%>:</b></td>
+          <td><%= link_to "#{@patient.current_schedule.started_at} to #{@patient.current_schedule.terminated_at}", [@patient, @patient.current_schedule] %></td>
+        </tr>
+        <tr>
+          <td><b><%= t(:today_next_record_time)%>:</b></td>
+          <td><%= format_pill_time(@patient.next_record_time) %></td>
+        </tr>
+        <tr>
+          <td><b><%= t(:today_submission)%>:</b></td>
+          <td><%= @patient.records.submissions_from_today.size %> of <%= @patient.current_schedule.pill_times.size %></td>
+        </tr>
+      <% else %>
+        <tr>
+          <td colspan="2"><b><%= t(:no_schedule_available)%></b></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<%= link_to t(:back), patients_path %> |
+<%= link_to t(:send_notification), new_notification_path(to: @patient) %> |
+<%= link_to t(:edit_patient_account), edit_patient_path(@patient) %> |
+<%= link_to t(:delete_patient), @patient, method: :delete, data: { confirm: t(:are_you_sure) } %>
+
+<hr />
+
+
+<div class="patient-records">
+  <h2><%= t(:calendar)%></h2>
+  <%= render partial: "calendar" %>
+</div>
+
+<div class="patient-schedule">
+  <h2><%= t(:schedules)%></h2>
+
+  <table class="fullwidth">
+    <thead>
+      <tr>
+        <th><%= t(:started_time)%></th>
+        <th><%= t(:terminated_time)%></th>
+        <th><%= t(:pill_times)%></th>
+        <th colspan=2>Adherence Report</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </td>
+    </thead>
+    <tbody>
+      <% @patient.schedules.order('started_at DESC').each do |schedule| %>
+        <tr>
+          <td><%= schedule.started_at %></td>
+          <td><%= schedule.terminated_at %></td>
+          <td><%= schedule.pill_times.length %></td>
+
+          <td><%= link_to patient_report_path(@patient, format: "pdf", schedule_id: schedule.id) do %>
+            <i class="fi-page-export-pdf"></i> PDF
+          <% end %></td>
+          <td><%= link_to patient_report_path(@patient, format: "csv", schedule_id: schedule.id) do %>
+            <i class="fi-page-export-csv"></i> CSV
+          <% end %></td>
+          <td><%= link_to t(:show), [schedule.patient, schedule] %></td>
+          <td><%= link_to t(:Edit), edit_patient_schedule_path(@patient, schedule) %></td>
+          <td><%= link_to 'X'.html_safe, [@patient, schedule],
+                          method: :delete, data: { confirm: t(:are_you_sure) } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to t(:new_schedule), new_patient_schedule_path(@patient) %>
+</div>
+<hr />
+
+<% if @patient.current_schedule %>
+<div class="patient-charts">
+  <%= render partial: "charts", locals: { patient: @patient, schedule: @patient.current_schedule } %>
+</div>
+<hr />
+<% else %>
+      <% schedule = @patient.schedules.order('started_at DESC').last %>
+      <% if schedule %>
+      <div class="patient-charts">
+        <%= render partial: "charts", locals: { patient: @patient, schedule: schedule } %>
+      </div>
+      <hr />
+      <% end %>
+<% end %>
+
+<div class="patient-records">
+  <h2><%= t(:patient_records)%></h2>
+  <%= render partial: "records/all_records",
+             locals: { table_id: 'record_list', patient: @patient, records: @patient.records } %>
+  <%-# link_to t(:view_all_records), patient_records_path(@patient) %>
+</div>
+
+<hr />
+
+<div class="patient-records">
+  <h2><%= t(:wallet_transactions)%></h2>
+  <%= render partial: "wallet_transactions/for_a_patient",
+             locals: { patient: @patient } %>
+</div>
+</div>

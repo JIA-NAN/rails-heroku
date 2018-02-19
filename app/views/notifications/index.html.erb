@@ -1,0 +1,43 @@
+<h1><%= t(:notifications)%></h1>
+
+<p>
+  <%= link_to t(:create_new_notification), new_notification_path %>
+</p>
+
+<%# display_filters(@filter.filters, @filter.active) %>
+
+<% if @notifications.empty? %>
+  <p><%= t(:there_is_no_scheduled_notification)%></p>
+<% else %>
+  <table class="fullwidth">
+    <tr>
+      <th><%= t(:type)%></th>
+      <th><%= t(:receiver)%></th>
+      <th><%= t(:time)%></th>
+      <th><%= t(:state)%></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @notifications.each do |notification| %>
+    <tr>
+      <td><%= notification.service %></td>
+      <td><%= notification.fullname %></td>
+      <td><%= localtime notification.send_at %></td>
+      <td><%= notification.sent? ? t(:sent) : t(:waiting) %></td>
+      <td>
+        <%= link_to t(:view), notification %>
+      </td>
+      <td>
+        <%= link_to t(:edit), edit_notification_path(notification) %>
+      </td>
+      <td>
+        <%= link_to 'X', notification, method: :delete, data: { confirm: t(:are_you_sure) } %>
+      </td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= will_paginate @notifications %>
+<% end %>

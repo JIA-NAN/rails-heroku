@@ -1,0 +1,6 @@
+<div data-alert class="alert-box">
+  [<%= localtime @grade.created_at, short_form: true %>]
+  <strong><%= t(:note_from_doctor)%></strong>
+  <%= @grade.comment %>
+  <a href="#" class="close">&times;</a>
+</div>

@@ -1,0 +1,19 @@
+<h2>
+  <%= t(:administrator)%><%= @admin.fullname %>
+</h2>
+
+<table>
+<tr>
+  <td><%= t(:email)%>:</td>
+  <td><%= @admin.email %></td>
+</tr>
+<tr>
+  <td><%= t(:role)%>:</td>
+  <td><%= array @admin.roles, :name %></td>
+</tr>
+</table>
+
+<% if current_admin.roles.include? "Admin" %>
+  <%= link_to t(:delete_administrator), @admin, method: :delete, data: { confirm: t(:are_you_sure) } %> |
+<% end %>
+<%= link_to t(:back), admins_path %>

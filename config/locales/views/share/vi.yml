@@ -1,0 +1,18 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+vi:
+  hello: "zzzz"
+  login_as_user: "Người dùng đăng nhập"
+  login_as_admin: "Admin đăng nhập"
+  login_id: "Đăng nhập bằng Id"
+  sign_in: "Đăng nhập"
+  sign_in_as_user: "Đăng nhập"
+  forgot_your_pass_word: "Quên mật khẩu"
+  sign_in_as_admin: "Đăng nhập Admin"
+  forgot_your_password: "Quên mật khẩu?"
+  send_me_reset_password_instructions: "Gửi hướng dẫn reset mật khẩu"
+  help_and_FAQs: "Trợ giúp và FAQs"
+  browser_requirements: "Yêu cầu trình duyệt web"
+  please_uses: "Tải xuống trình duyệt Chrome mới nhật tại "
+  wrong_email_or_password: "Sai mật khẩu hoặc email"

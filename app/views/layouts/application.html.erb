@@ -1,0 +1,43 @@
+<%= render "shared/header" %>
+<%= render "shared/menu" %>
+
+<div class="main-content">
+<div class="row">
+      <!-- Side Bar -->
+      <div class="small-3 columns">
+        <div class="callout">
+          <% if admin_signed_in? %>
+            <%= render "shared/admin_sidebar" %>
+          <% elsif patient_signed_in? %>
+            <%= render "shared/patient_sidebar" %>
+          <% end %>
+        </div>
+        <!-- additional sidebar -->
+        <% if content_for?(:sidebar) %>
+          <div class="callout">
+            <%= yield(:sidebar) %>
+          </div>
+         <% end %>
+      </div>
+      <!-- End Side Bar -->
+
+      <!-- Main Content -->
+      <div class="small-9 columns">
+        <% if flash[:notice] %>
+          <div data-alert class="alert-box success" id="notice">
+            <%= flash[:notice] %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% elsif flash[:error] %>
+          <div data-alert class="alert-box alert" id="notice">
+            <%= flash[:error] %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+
+        <%= yield %>
+      </div>
+      <!-- End Main Content -->
+</div>
+</div>
+<%= render "shared/footer" %>

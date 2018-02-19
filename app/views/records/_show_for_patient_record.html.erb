@@ -1,0 +1,34 @@
+<table>
+  <tr>
+    <td><b>Record Status:</b></td>
+    <td><%= @record.status %></td>
+    <td><b>Submission Time:</b></td>
+    <td><%= localtime @record.created_at %></td>
+  </tr>
+  <tr>
+    <td><b>Side Effects:</b></td>
+    <td colspan="3"><%= array @record.side_effects, :name %></td>
+  </tr>
+  <tr>
+    <td><b><%= display_comment_name @record %>:</b></td>
+    <td colspan="3"><%= @record.comment %></td>
+  </tr>
+</table>
+
+<div>
+  <% if @record.video_url %>
+    <%= video_tag @record.video_url, controls: true %>
+  <% else %>
+    <p>
+      <b>No video uploaded.</b>
+    </p>
+  <% end %>
+</div>
+
+<h1>Grade</h1>
+
+<% if @record.grade %>
+  <%= render @record.grade %>
+<% else %>
+  <p>Not Graded.</p>
+<% end %>

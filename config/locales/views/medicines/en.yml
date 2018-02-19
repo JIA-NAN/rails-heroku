@@ -1,0 +1,19 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  editing_medicine: "Editing medicine"
+  show: 'Show'
+  back: 'Back'
+  medicines: "Medicines"
+  add_new_medicine: 'Add New Medicine'
+  there_is_no_medicines: "There is no medicines configured for the system."
+  name: "Name"
+  description: "Description"
+  edit: 'Edit'
+  destroy: 'Destroy'
+  are_you_sure: 'Are you sure?'
+  add_new_medicine: "Add New Medicine"
+  back: 'Back'
+  
+

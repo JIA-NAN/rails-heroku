@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab" rel="stylesheet">
+    <style>
+    body {
+      margin: 0pt;
+      padding: 0pt;
+      border: 0pt;
+    }
+    table, table td {
+      border-color: white;
+    }
+    .report {
+      width: 8.5in;
+      height: 11in;
+      font-family: Roboto, Helvetica, Arial;
+    }
+    h1, h2, h3, h4, h5 {
+      font-family: Roboto Slab, Helvetica, Arial;
+    }
+    h1 small {
+      font-weight: normal;
+      font-size: 10pt;
+    }
+    #myCanvas{
+      width: 900pt;
+      height: 300pt;
+    }
+    #page-wrap { width: 800pt; margin: 0 auto; }
+    </style>
+  </head>
+  <script>
+Function.prototype.bind = Function.prototype.bind || function (thisp) {
+  var fn = this;
+  return function () {
+    return fn.apply(thisp, arguments);
+  };
+};
+  </script>
+  <script>
+<%= Rails.application.assets.find_asset('typedarray.js').to_s.html_safe %>
+
+<!--    // Add this line to render pdf from plotly on local and copy plotly-latest.min.js to folder app/assets/javascripts
+// Remove this line to render pdf from plotly on server and remove file plotly-latest.min.js from folder app/assets/javascripts -->
+
+// <%= Rails.application.assets.find_asset('plotly-latest.min.js').to_s.html_safe %>
+</script>
+
+<!-- // plotly-latest.min.js is big 2.3 Mb. On production (server) using cdn link to import plotly-latest.min.js -->
+
+<div id="page-wrap">
+  <div class="report">
+    <table>
+      <tr>
+        <td valign="top">
+    <h1><small>Patient</small><br>
+    <%= patient.fullname %></h1>
+    <h1><small>Medication Period:</small><br><%= schedule.started_at %> - <%= schedule.terminated_at || " ? " %></h1>
+  </td>
+  <td valign="top">
+    <h1><small>Taking:</small><br>
+      <% schedule.pill_times.each {|t|
+        t.medicines.each {|m|
+          %>
+        <%= m.name %><br>
+      <% }
+      } %>
+    </h1>
+  </td>
+</tr>
+</table>
+<hr>
+<%= render partial: "patients/charts", locals: { patient: patient, schedule: schedule } %>
+
+    <div style='page-break-before:always'></div>
+    <h1>Records</h1>
+    <div class="patient-stats small-12 large-6 columns">
+      <hr>
+      <table class="fullwidth" id="record_list">
+        <tr>
+          <td><b>Medication Time</b></td>
+          <td><b>Grade</b></td>
+          <td><b>Took Medication At</b></td>
+          <td><b>Comments</b></td>
+        </tr>
+        <% patient.records.from_period(schedule.started_at, schedule.terminated_at).each do |record| %>
+          <% record_patient = patient || record.patient %>
+          <% if record.received == false
+               status = record.received
+          else
+            status = record.received
+          end
+        %>
+      <tr id="<%= dom_id(record) %>" class="<%= status %>">
+        <td>
+          <% if record.is_excuse? %>
+            <%= localtime record.pill_time_at %>
+          <% else %>
+            <span data-tooltip class="has-tip" title="<%= submission_time_diff(record) %>">
+              <%= localtime record.pill_time_at %>
+            </span>
+          <% end %>
+        </td>
+        <td class="<%= status %>"><%= display_grade(record) %></td>
+        <td class="<%= status %>"><%= localtime record.actual_pill_time_at %></td>
+        <td><%= record.comment %></td>
+      </tr>
+    <% end %>
+      </table>
+      <div>
+        <div>
+
+</div>
+</div>
+</html>

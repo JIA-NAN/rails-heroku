@@ -1,0 +1,29 @@
+<h1>Step by Step Recording Instructions</h1>
+
+<p><%= link_to 'Add New Step by Step Recording Instruction', new_pill_sequence_path %></p>
+
+<% if @sequences.empty? %>
+  <p>There are no step by step instructions configured for the system.</p>
+<% else %>
+
+<table class="fullwidth">
+  <tr>
+    <th>Name</th>
+    <th>Default</th>
+    <th>Num of Steps</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @sequences.each do |sequence| %>
+  <tr>
+    <td><%= sequence.name %></td>
+    <td><%= sequence.default? ? "Yes" : "No" %></td>
+    <td><%= sequence.steps.size %></td>
+    <td><%= link_to 'Edit', edit_pill_sequence_path(sequence) %></td>
+    <td><%= link_to 'Destroy', sequence, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<% end %>

@@ -1,0 +1,57 @@
+<% disable_delete = local_assigns.has_key?(:disable_delete) ? disable_delete : false %>
+
+<% if admin_signed_in? %>
+
+<table class="fullwidth" id="record_list">
+  <thead>
+    <!--th>Device</th-->
+    <th>Patient</th>
+    <th>Scheduled Time</th>
+    <th>Explanation</th>
+    <th>Self-Report</th>
+    <th data-sortable="false">Reason</th>
+    <th data-sortable="false">Meds Taken?</th>
+    <th data-sortable="false"></th>
+   <% if !disable_delete %>
+    <th data-sortable="false"></th>
+   <% end %>
+</thead>
+
+  <% records.each do |record| %>
+    <% record_patient = patient || record.patient %>
+	  <% if record.received == false
+		  status = display_grade(record)
+	  else
+		  status = record.received
+	  end
+	  %>
+    <tr id="<%= dom_id(record) %>" class="<%= status %>">
+      <td>
+        <span data-tooltip class="has-tip" title="<%= record_patient.mist_id %>">
+          <%= link_to record_patient.fullname, record_patient, target: "_blank" %>
+        </span>
+      </td>
+      <td>
+        <%= localtime record.pill_time_at %>
+      </td>
+      <td>
+        <%= record.comment %>
+      </td>
+      <td>
+        <%= display_self_report(record) %>
+      </td>
+		<td class="<%= status %>"><%= display_explanation(record) %></td>
+    <td><% if record.graded %><%= record.grade.pill_taken %><% end %></td>
+	<td><%= link_to patient_record_path(record_patient, record) do %><i class="fi-eye"></i><% end %></td>
+    <% if !disable_delete %>
+      <td>
+        <%= link_to 'X'.html_safe, [record_patient, record],
+          method: :delete,
+          data: { confirm: 'Are you sure to delete this record?' },
+          remote: true %>
+      </td>
+    <% end %>
+    </tr>
+  <% end %>
+</table>
+<% end %>

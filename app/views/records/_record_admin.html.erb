@@ -1,0 +1,267 @@
+<%= javascript_include_tag('aes.js') %>
+<%= javascript_include_tag('mode-ecb-min.js') %>
+<%= javascript_include_tag('zip/z-worker.js') %>
+<%= javascript_include_tag('zip/zip.js') %>
+<%= javascript_include_tag('zip/zip-fs.js') %>
+<%= javascript_include_tag('zip/zip-ext.js') %>
+<%= javascript_include_tag('zip/config.js') %>
+<table>
+  <tr>
+    <td><b>Patient:</b></td>
+    <td><%= link_to @record.patient.fullname, @record.patient %></td>
+    <td><b>Record Status:</b></td>
+    <td colspan="3"><%= display_grade(@record) %></td>
+  </tr>
+  <tr>
+    <td><b>Scheduled Time:</b></td>
+    <td><%= localtime @record.pill_time_at %></td>
+    <td><b>Submission Time:</b></td>
+    <td><%= localtime @record.created_at %></td>
+    <!--td><b>Using Device:</b></td>
+    <td><%= @record.device %></td-->
+  </tr>
+  <% if @record.actual_pill_time_at? %>
+    <tr>
+      <td><b>Video recorded at:</b></td>
+      <td colspan="5"><%= localtime @record.actual_pill_time_at %></td>
+    </tr>
+  <% end %>
+    <!--tr>
+      <td><b>System Message:</b></td>
+      <td colspan="5"><%= @record.meta %>
+    </tr-->
+    <tr>
+      <td><b>On Time?</b></td>
+      <td colspan="5"><%= submission_time_diff(@record) %></td>
+    </tr>
+    <tr>
+      <td><b>Side Effects:</b></td>
+      <td colspan="5"><%= array @record.side_effects, :name %></td>
+    </tr>
+</table>
+
+<% if @record.received == false %>
+   <div id="container" >
+    <h3>No video uploaded</h3>
+    <table>
+    <tr>
+      <td><b><%= display_comment_name @record %>:</b></td>
+      <td colspan="5"><%= @record.comment %></td>
+    </tr>
+    <tr>
+      <td><b>Self-Report:</b></td>
+      <td colspan="3"><%= display_self_report(@record) %></td>
+    </tr>
+  </table>
+  </div>
+<% elsif @record.video_url %>
+  <h3>Video</h3>
+  <p>
+    <%= link_to "Download Video", @record.video_url, download: video_download_filename(@record), class: "tiny button" %>
+  </p>
+  <div id="container" data-url="<%= @record.video_url %>">
+    <video controls="controls" src=""></video>
+  </div>
+
+  <div>
+    <% if @record.screenshot_urls %>
+      <% if @record.screenshot_urls.include? "," %>
+        <div class="thumbnails">
+          <% @record.screenshot_urls.split(",").each do |screenshot_url| %>
+            <%= link_to screenshot_url do %>
+              <%= image_tag screenshot_url, class: "thumnail" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="thumbnails" data-url="<%= @record.screenshot_urls %>">
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%# Using video_tag results in a bug where the subsequent page is not rendered correctly %>
+<% end %>
+
+<script>
+            window.myURL = window.URL || window.webkitURL;
+            function convertWordArrayToUint8Array(wordArray) {
+              var len = wordArray.words.length,
+                u8_array = new Uint8Array(len << 2),
+                offset = 0, word, i
+              ;
+              for (i=0; i<len; i++) {
+                word = wordArray.words[i];
+                u8_array[offset++] = word >> 24;
+                u8_array[offset++] = (word >> 16) & 0xff;
+                u8_array[offset++] = (word >> 8) & 0xff;
+                u8_array[offset++] = word & 0xff;
+              }
+              return u8_array;
+            }
+
+            function base64ArrayBuffer(arrayBuffer) {
+              var base64    = ''
+              var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+
+              var bytes         = new Uint8Array(arrayBuffer)
+              var byteLength    = bytes.byteLength
+              var byteRemainder = byteLength % 3
+              var mainLength    = byteLength - byteRemainder
+
+              var a, b, c, d
+              var chunk
+
+              // Main loop deals with bytes in chunks of 3
+              for (var i = 0; i < mainLength; i = i + 3) {
+                // Combine the three bytes into a single integer
+                chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2]
+
+                // Use bitmasks to extract 6-bit segments from the triplet
+                a = (chunk & 16515072) >> 18 // 16515072 = (2^6 - 1) << 18
+                b = (chunk & 258048)   >> 12 // 258048   = (2^6 - 1) << 12
+                c = (chunk & 4032)     >>  6 // 4032     = (2^6 - 1) << 6
+                d = chunk & 63               // 63       = 2^6 - 1
+
+                // Convert the raw binary segments to the appropriate ASCII encoding
+                base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d]
+              }
+
+              // Deal with the remaining bytes and padding
+              if (byteRemainder == 1) {
+                chunk = bytes[mainLength]
+
+                a = (chunk & 252) >> 2 // 252 = (2^6 - 1) << 2
+
+                // Set the 4 least significant bits to zero
+                b = (chunk & 3)   << 4 // 3   = 2^2 - 1
+
+                base64 += encodings[a] + encodings[b] + '=='
+              } else if (byteRemainder == 2) {
+                chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1]
+
+                a = (chunk & 64512) >> 10 // 64512 = (2^6 - 1) << 10
+                b = (chunk & 1008)  >>  4 // 1008  = (2^6 - 1) << 4
+
+                // Set the 2 least significant bits to zero
+                c = (chunk & 15)    <<  2 // 15    = 2^4 - 1
+
+                base64 += encodings[a] + encodings[b] + encodings[c] + '='
+              }
+
+              return base64
+            }
+            var getKeyReq = new XMLHttpRequest();
+            getKeyReq.open("GET", "/key", true);
+            getKeyReq.onload = function (oEvent) {
+                     var data = getKeyReq.response;
+                     if (data) {
+                      var json = JSON.parse(data);
+                      var base64Key = json.key;
+                      var key = CryptoJS.enc.Hex.parse(base64Key);
+                      // var iv = CryptoJS.enc.Hex.parse("84e8c3ea8859a0e293941d1cb00a39c3")
+                      var aesOptions = {
+                          mode: CryptoJS.mode.ECB,
+                          padding: CryptoJS.pad.Pkcs7
+                      };
+                      var container = document.getElementById("container");
+                      var encryptedFilename = container.getAttribute("data-url")
+                      if (encryptedFilename != null){
+                            var oReq = new XMLHttpRequest();
+                            oReq.open("GET", encryptedFilename, true);
+                            oReq.responseType = "arraybuffer";
+
+
+                            oReq.onload = function (oEvent) {
+                               var data = oReq.response;
+                               if (data) {
+                                  encodedData = base64ArrayBuffer(data);
+                                  var decryptedData = CryptoJS.AES.decrypt( encodedData, key, aesOptions);
+
+                                  var vid = window.myURL.createObjectURL(new Blob([convertWordArrayToUint8Array(decryptedData).buffer]));
+
+                                  // var content = decryptedData.toString(CryptoJS.enc.Base64)
+
+                                  var container = document.getElementById("container");
+
+                                  container.innerHTML = "<video controls='' id ='video' width='400' height='320' background='#0000' src='"+vid+"'> </video>"
+                               }
+                            };
+
+                            oReq.send(null);
+
+                       }
+
+                       var URL = document.getElementsByClassName("thumbnails")[0].getAttribute("data-url");
+
+                       var zipFs = new zip.fs.FS();
+                       function onerror(message) {
+                          console.error(message);
+                        }
+                       var encryptedFilename = URL;
+                       if (encryptedFilename != null){
+                            var oReq2 = new XMLHttpRequest();
+                            oReq2.open("GET", encryptedFilename, true);
+                            oReq2.responseType = "arraybuffer";
+                            oReq2.onload = function (oEvent) {
+                            var data = oReq2.response;
+                            if (data) {
+                              console.log("finish get file");
+                              encodedData = base64ArrayBuffer(data);
+                              var decryptedData = CryptoJS.AES.decrypt( encodedData, key, aesOptions);
+                              zipFs.importBlob(new Blob([convertWordArrayToUint8Array(decryptedData).buffer]), function() {
+                                      var directory = zipFs.root;
+                                      console.log("unzip")
+                                      directory.children.forEach(function(entry, index) {
+                                                entry.getData( new zip.ArrayBufferWriter(), function(data) {
+                                                    var thumbnails = document.getElementsByClassName("thumbnails")[0];
+                                                    var a = document.createElement('a');
+                                                    var image = window.myURL.createObjectURL(new Blob([new Uint8Array(data).buffer]));
+                                                    a.innerHTML = "<img class='thumnail' data='"+index+"' src='"+image+"' />"
+                                                    thumbnails.append(a);
+                                                });
+                                      });
+                                }, onerror);
+                           }
+                        };
+                        oReq2.send(null);
+                       }
+                     }
+                  };
+            getKeyReq.send(null);
+</script>
+
+<% if false #@record.video_url %>
+<%= video_tag @record.video_url, controls: true %>
+
+  <div>
+    <% if params[:steplized] %>
+      <%= video_tag @record.url_to_steplized_video, controls: true %>
+    <% else %>
+      <%= video_tag @record.video_url, controls: true %>
+    <% end %>
+  </div>
+
+  <p class="record-meta-steps">
+    Steps:
+    <% if params[:steplized] %>
+      <span id="record-meta-steps-btns"><%= @record.meta_steplized %></span>
+    <% else %>
+      <span id="record-meta-steps-btns"><%= @record.meta %></span>
+    <% end %>
+  </p>
+  <% content_for :javascript do %>
+    <%= javascript_include_tag "record_show" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Download Video", @record.video_url, download: video_download_filename(@record), class: "tiny button" %>
+    <% unless @record.meta_steplized.blank? %>
+      <% if params[:steplized] %>
+        <%= link_to "View Original", record_path(@record), class: "tiny  button" %>
+      <% else %>
+        <%= link_to "View Steplized", record_path(@record, steplized: 1), class: "tiny  button" %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

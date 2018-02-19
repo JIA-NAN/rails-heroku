@@ -1,0 +1,46 @@
+<div id="events_calendar">
+<%
+ap = AdherencePresenter.new(@patient)
+def show_day(ap,d)
+  status = ap.get_adherence_status_on(d)
+  div_class =
+    case status
+      when AdherencePresenter::ADHERE_YES then "yes"
+      when AdherencePresenter::ADHERE_NO then "no"
+      when AdherencePresenter::ADHERE_NA then "na"
+      when AdherencePresenter::ADHERE_PARTIAL then "partial"
+      when AdherencePresenter::ADHERE_PENDING then "pending"
+    end
+  icon =
+      case status
+      when AdherencePresenter::ADHERE_YES then "<i class='fi-star large' color='#afa'></i>"
+      when AdherencePresenter::ADHERE_NO then "<i class='fi-x-circle large'></i>"
+      when AdherencePresenter::ADHERE_NA then ""
+      when AdherencePresenter::ADHERE_PARTIAL then "<i class='fi-minus-circle large'></i>"
+      when AdherencePresenter::ADHERE_PENDING then "<i class='large'>...</i>"
+      end
+return "<div class='adherence_cell " + div_class + "'>" + "<a href='"+@patient.id.to_s+"/record?date="+d.to_s+"'>"+d.day.to_s + "</a>" + "<br>" + icon + "</div>"
+end
+%>
+<%= month_calendar previous_link: events_ajax_previous_link, next_link: events_ajax_next_link do |d|
+  show_day(ap, d).html_safe
+end %>
+<table>
+        <td>
+              <div class='adherence_cell yes'><i class='fi-star large' color='#afa'></i> </div>
+        </td>
+        <td> adherent</td>
+        <td>
+              <div class='adherence_cell no'><i class='fi-x-circle large'></i> </div>
+        </td>
+        <td> not adherent</td>
+        <td>
+              <div class='adherence_cell partial'> <i class='fi-minus-circle large'></i> </div>
+        </td>
+        <td>partial</td>
+        <td>
+              <div class='adherence_cell pending'> <i class='large'>...</i> </div>
+        </td>
+        <td>pending</td>
+</table>
+</div>

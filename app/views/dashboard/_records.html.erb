@@ -1,0 +1,63 @@
+<% disable_delete = local_assigns.has_key?(:disable_delete) ? disable_delete : false %>
+
+<% if table_id
+     id = table_id
+   else
+     id = "record_list"
+   end
+%>
+<table class="fullwidth" id="<%= id %>">
+  <thead>
+    <th>Grade</th>
+    <th>Pill At</th>
+  <% if admin_signed_in? %>
+    <!--th>Device</th-->
+    <th>Patient</th>
+  <% end %>
+    <th data-sortable="false">Comment</th>
+    <th data-sortable="false">View</th>
+  <% if admin_signed_in? && !disable_delete %>
+    <th data-sortable="false"></th>
+  <% end %>
+</thead>
+
+  <% records.each do |record| %>
+    <% record_patient = patient || record.patient %>
+
+	<% if record.received == false
+		status = display_grade(record)
+	else
+		status = record.received
+	end
+	%>
+
+    <tr id="<%= dom_id(record) %>" class="<%= status %>">
+		<td class="<%= status %>"><%= display_grade(record) %></td>
+      <td>
+        <% if record.is_excuse? %>
+          <%= localtime record.pill_time_at %>
+        <% else %>
+          <span data-tooltip class="has-tip" title="<%= submission_time_diff(record) %>">
+            <%= localtime record.pill_time_at %>
+          </span>
+        <% end %>
+      </td>
+    <% if admin_signed_in? %>
+      <!--td><%= record.device %></td-->
+      <td>
+        <%= render partial: 'patients/name', locals: {:patient => record_patient} %>
+      </td>
+    <% end %>
+      <td><%= record.comment %></td>
+      <td><%= link_to 'View', patient_record_path(record_patient, record) %></td>
+    <% if admin_signed_in? && !disable_delete %>
+      <td>
+        <%= link_to '&chi;'.html_safe, [record_patient, record],
+          method: :delete,
+          data: { confirm: 'Are you sure to delete this record?' },
+          remote: true %>
+      </td>
+    <% end %>
+    </tr>
+  <% end %>
+</table>

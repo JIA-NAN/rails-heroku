@@ -1,0 +1,27 @@
+<h2><%= t(:create_a_admin_account)%></h2>
+
+<%= simple_form_for(resource,
+                    :as => resource_name,
+                    :url => registration_path(resource_name),
+                    :html => { :class => "custom" }) do |f| %>
+  <% if resource.errors.any? %>
+    <div data-alert class="alert alert-box">
+      <%= pluralize(resource.errors.count, "error") %> prohibited this admin from being saved
+    </div>
+  <% end %>
+
+  <div class="row">
+    <%= f.input :firstname, wrapper_html: { class: "large-6 columns" } %>
+    <%= f.input :lastname, wrapper_html: { class: "large-6 columns" } %>
+  </div>
+
+  <%= f.input :email, required: true %>
+
+  <%= f.association :roles, as: :check_boxes, required: true %>
+
+  <%  tmp_password = Devise.friendly_token.first(9) %>
+  <%= f.input :password, required: true, as: :string, input_html: { value: tmp_password } %>
+  <%= f.input :password_confirmation, required: true, as: :string, input_html: { value: tmp_password } %>
+
+  <div><%= f.submit t(:create), :class => "button" %></div>
+<% end %>

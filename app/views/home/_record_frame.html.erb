@@ -1,0 +1,80 @@
+<div data-alert class="alert-box alert" id="compatible-alert">
+  <strong><%= t(:alert)%>:</strong>
+  <%= t(:browser_alert)%>
+  <a href="https://www.google.com/intl/en/chrome/browser/" target="_blank">Google Chrome</a> browser.
+</div>
+
+<!-- debug mode flag -->
+<script><%= sanitize "window.debugMode = #{params[:debug] || false}" %></script>
+<!-- recording steps -->
+<script><%= sanitize "window.steps = #{@sequence.steps.to_json || []}" %></script>
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1 class="compact"><%= t(:submit_record)%></h1>
+  </div>
+</div>
+
+<div class="row hidden">
+  <div class="large-9 columns" id="recording-steps"></div>
+  <div class="large-3 columns">
+    <ul class="button-group">
+      <li>
+        <button id="next-step-btn" class="success narrow button hidden">
+        <%= t(:next_step)%>
+          
+        </button>
+      </li>
+      <li>
+        <button id="record-btn" class="alert narrow button" disabled>
+        <%= t(:start_recording)%>
+          
+        </button>
+      </li>
+      <li>
+        <button id="submit-btn" class="success narrow button hidden">
+        <%= t(:submit_record)%>
+          
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="recorder" class="row" data-pill-time="<%= @pill_time %>" data-sequence="<%= @sequence.id %>">
+  <div id="recorder-container">
+    <video id="client-video" autoplay loop muted></video>
+
+    <div id="recorder-status" class="notice">
+      <h4><%= t(:request_to_access_your_webcam)%></h4>
+      <p>Please click on the <b>Allow</b> button at the Top Right corner of the page.</p>
+      <%= image_tag("access-webcam.png") %>
+    </div>
+
+    <div id="recorder-message" class="hidden"></div>
+    <div id="recorder-count" class="hidden">3</div>
+    <div id="recorder-face-zone" class="hidden">
+      <div id="recorder-pill-zone"></div>
+      <div id="recorder-face-eye-left"></div>
+      <div id="recorder-face-eye-right"></div>
+      <div id="recorder-face-mouth"></div>
+    </div>
+  </div>
+</div>
+
+<div id="recorder-debug" class="<%= "hidden" unless params[:debug] %>">
+  <canvas id="client-painter" width="320" height="240"></canvas>
+  <canvas id="client-overlay" width="320" height="240"></canvas>
+  <p id="recorder-debug-message">
+    <b><%= t(:lighting)%>:</b> <span id="debug-lighting"></span><br>
+    <b><%= t(:tracker)%>:</b> <span id="debug-trackerstatus"></span><br>
+    <b><%= t(:position)%>:</b> <span id="debug-headtracking"></span><br>
+    <b><%= t(:judged)%>:</b> <span id="debug-headjudged"></span>
+  </p>
+</div>
+
+<%= render 'record_modal' %>
+
+<% content_for :javascript do %>
+  <%= javascript_include_tag "recording/main" %>
+<% end %>

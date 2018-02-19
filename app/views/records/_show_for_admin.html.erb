@@ -1,0 +1,18 @@
+<%= render 'record_admin' %>
+
+<% if @record.grade %>
+  <%= render @record.grade %>
+<% else %>
+  <% if @record.require_grading? %>
+    <h3>Grade</h3>
+    <%= render partial: 'grades/form', locals: { grade: @record.build_grade } %>
+  <% else %>
+    <p>The patient does not submit any explanation for missing his/her pill.</p>
+  <% end %>
+<% end %>
+
+<h3>AutoGrade <small>(beta)</small></h3>
+<% if @record.auto_grade %>
+  <%= render @record.auto_grade %>
+<% end %> 
+<%= link_to "Auto Grade", process_video_patient_record_path(@record.patient, @record), class: 'button', method: :post %>

@@ -1,0 +1,7 @@
+<p id="notice"><%= notice %></p>
+
+<h3>
+After adhering fully consecutively for <%= @reward_rule.num_of_days %> days, patient will receive <%= number_to_currency(@reward_rule.reward) %>.
+</h3>
+<%= link_to 'Edit', edit_reward_rule_path(@reward_rule) %> |
+<%= link_to 'Back', reward_rules_path %>

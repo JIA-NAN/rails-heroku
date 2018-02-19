@@ -1,0 +1,28 @@
+<div class="invoice">
+  
+  <h2><%= t('patient_name', fullname: patient.fullname) %></h2>
+
+  <div class="row">
+  <div class="patient-info small-12 large-6 columns">
+    <h3><%= t(:account_info)%></h3>
+    <table class="fullwidth">
+      <tr>
+        <td><b><%= t(:login_id)%></b></td>
+        <td><%= patient.mist_id %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:notification)%>:</b></td>
+        <td><%= array(patient.notification_services, :name, 'No') %></td>
+      </tr>
+      <tr>
+        <td><b><%= t(:wallet_ballance)%>:</b></td>
+        <% if patient.wallet_balance %>
+        <td><%= link_to number_to_currency(patient.wallet_balance, :units => '$'), patient_wallet_transactions_path(patient) %></td>
+        <% else %>
+        <td><%= link_to number_to_currency(0), patient_wallet_transactions_path(patient) %></td>
+        <% end %>
+      </tr>
+    </table>
+  </div>
+  
+</div>

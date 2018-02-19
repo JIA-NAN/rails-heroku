@@ -1,0 +1,31 @@
+
+<ul class="menu vertical">
+  <li class="heading"><%= link_to dashboard_path do %><i class='fi-layout medium'></i><%=t(:dashboard)%> <% end %></li>
+  <!--li><%= link_to("t(:on_submission)", submission_path) %></li-->
+  <li class="divider"></li>
+  <li class="heading"><i class="fi-database medium"></i> <%=t(:records)%></li>
+  <li class="side-nav-item"><%= link_to(t(:view_records), records_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:grade_records), grading_path) %></li>
+  <li class="divider"></li>
+  <li class="heading"><i class="fi-trophy medium"></i>&nbsp;<%=t(:rewards)%></li>
+  <li class="side-nav-item"><%= link_to(t(:view_reward_rules), reward_rules_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:view_wallets), wallets_path) %></li>
+
+
+  <li class="divider"></li>
+  <li class="heading"><i class="fi-torsos medium"></i> <%=t(:patients)%></li>
+  <li class="side-nav-item"><%= link_to(t(:view_patients), patients_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:add_new_patients), new_patient_registration_path) %></li>
+  <li class="divider"></li>
+  <li class="heading"><i class="fi-torsos medium"></i> <%=t(:admins)%></li>
+  <li class="side-nav-item"><%= link_to(t(:view_admins), admins_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:add_new_admin), new_admin_registration_path) %></li>
+  <li class="divider"></li>
+  <li class="heading"><i class="fi-wrench medium"></i> <%=t(:settings)%></li>
+  <li class="side-nav-item"><%= link_to(t(:alerts), alerts_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:medicines), medicines_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:side_effects), side_effects_path) %></li>
+  <li class="side-nav-item"><%= link_to(t(:recording_instructions), pill_sequences_path) %></li>
+  <li class="divider"></li>
+  <li class="heading"><%= link_to edit_admin_registration_path do %><i class='fi-pencil medium'></i> <%=t(:edit_my_account)%><% end %></li>
+</ul>

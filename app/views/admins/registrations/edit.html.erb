@@ -1,0 +1,30 @@
+<h2><%= t(:edit_your_account)%></h2>
+
+<%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+  <% if resource.errors.any? %>
+    <div data-alert class="alert alert-box">
+      <%= pluralize(resource.errors.count, "error") %> prohibited your edits from being saved
+    </div>
+  <% end %>
+
+  <div class="row">
+    <%= f.input :firstname, disabled: true,
+                            wrapper_html: { class: "large-6 columns" } %>
+
+    <%= f.input :lastname, disabled: true,
+                           wrapper_html: { class: "large-6 columns" } %>
+  </div>
+
+  <%= f.input :email, required: true %>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div><%= t('currently_waiting', email: resource.unconfirmed_email)%></div>
+  <% end %>
+
+  <%= f.input :password, placeholder: t(:leave_blank) %>
+  <%= f.input :password_confirmation %>
+
+  <%= f.input :current_password, required: true, placeholder: t(:we_need_your_current_password) %>
+
+  <div><%= f.submit t(:update), :class => "button" %></div>
+<% end %>

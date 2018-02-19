@@ -1,0 +1,19 @@
+<div class="invoice">
+  <h1>Envato Invoice</h1>
+ 
+  <h3>To: <%= @invoice.client %></h3>
+  <h3>Date: <%= @invoice.date.strftime("%B %d, %Y") %></h3>
+ 
+
+ 
+  <% if @invoice.notes %>
+  <div class="notes">
+    <p><strong>Notes:</strong> <%= @invoice.notes %></p>
+  </div>
+  <% end %>
+
+  <%= link_to "Download PDF",
+  invoice_download_path(@invoice, format: "pdf"),
+  target: "_blank",
+  class: "download" %>
+</div>

@@ -1,0 +1,6 @@
+<h1><%= t(:editing_wallet_transaction)%></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:show), patient_wallet_transaction_path(@patient, @wallet_transaction) %> |
+<%= link_to t(:back), patient_wallet_transactions_path(@patient) %>

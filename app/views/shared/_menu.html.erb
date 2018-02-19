@@ -1,0 +1,26 @@
+<div class="top-bar" data-topbar role="navigation">
+  <div class="top-bar-title">
+  <ul class="menu">
+      <li class="menu-text hide-for-small-only"><strong>
+        <a href="<%= admin_signed_in? ? "/dashboard" : "/"%>">
+          Mobile Interactive Supervised Therapy
+          <%= ": Admin" if admin_signed_in? %>
+        </a></strong>
+      <li class="menu-text show-for-small-only">
+        <a href="/">
+          <strong>MIST <%= ": Admin" if admin_signed_in? %></strong>
+        </a>
+      </li>
+  </ul>
+  </div>
+
+  <div class="top-bar-right">
+    <% if patient_signed_in? %>
+      <%= render "shared/patient_menu" %>
+    <% elsif admin_signed_in? %>
+      <%= render "shared/admin_menu" %>
+    <% else %>
+      <%= render "shared/login_menu" %>
+    <% end %>
+  </div>
+</div>

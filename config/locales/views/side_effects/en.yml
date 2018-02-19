@@ -1,0 +1,10 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  editing_side_effect: "Editing Side Effect"
+  side_effect_definitions: "Side Effect Definitions"
+  add_new_side_effect_definition: 'Add New Side Effect Definition'
+  there_is_no_side_effect: "There is no side effect definitions configured for the system."
+  
+

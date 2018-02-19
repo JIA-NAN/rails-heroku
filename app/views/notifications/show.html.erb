@@ -1,0 +1,51 @@
+<h1><%= t(:scheduled_notification)%></h1>
+
+<table>
+  <tr>
+    <td>
+      <b><%= t(:receiver)%>:</b>
+    </td>
+    <td>
+      <%= @notification.fullname %>
+    </td>
+    <td>
+      <b><%= t(:deliver_id)%>:</b>
+    </td>
+    <td>
+      <%= @notification.receiver %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b><%= t(:type)%></b>
+    </td>
+    <td>
+      <%= @notification.service %>
+    </td>
+    <td>
+      <b><%= t(:to_send_at)%></b>
+    </td>
+    <td>
+      <%= localtime @notification.send_at %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b><%= t(:state)%>:</b>
+    </td>
+    <td colspan="3">
+      <%= @notification.sent ? t(:sent) : t(:waiting) %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b><%= t(:message)%>:</b>
+    </td>
+    <td colspan="3">
+      <%= @notification.message %>
+    </td>
+  </tr>
+</table>
+
+<%= link_to t(:edit), edit_notification_path(@notification) %> |
+<%= link_to t(:back), notifications_path %>

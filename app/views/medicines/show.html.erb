@@ -1,0 +1,13 @@
+<p>
+  <b><%= t(:name)%>:</b>
+  <%= @medicine.name %>
+</p>
+
+<p>
+  <b><%= t(:description)%>:</b>
+  <%= @medicine.description %>
+</p>
+
+
+<%= link_to t(:edit), edit_medicine_path(@medicine) %> |
+<%= link_to t(:back), medicines_path %>

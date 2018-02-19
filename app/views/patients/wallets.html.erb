@@ -1,0 +1,30 @@
+<h1><%= t(:wallet_balances)%></h1>
+
+<% if admin_signed_in? %>
+<table class="fullwidth" id="record_list">
+  <thead>
+    <th>Patient ID</th>
+    <th>Name</th>
+    <th>Balance</th>
+    <th data-sortable="false"></th>
+    <th data-sortable="false"></th>
+</thead>
+<tbody>
+<% @patients.each do |patient| %>
+  <tr>
+    <% patient.update_wallet %>
+    <td><%= patient.mist_id %></td>
+    <td><%= render partial: 'name', locals: {:patient => patient} %></td>
+    <td><% if patient.wallet_balance %>
+            <%= number_to_currency(patient.wallet_balance, :units => '$') %>
+            <% else %>
+            <%= number_to_currency(0) %>
+            <% end %>
+    </td>
+    <td><%= link_to "View Transactions", patient_wallet_transactions_path(patient) %></td>
+    <td><%= link_to "Pay", new_patient_wallet_transaction_path(patient) %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+<% end %>

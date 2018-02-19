@@ -1,0 +1,18 @@
+<% if @next_pill[:date] == :tomorrow %>
+  <h1><%= t(:you_have_submitted_all_records_today)%></h1>
+<% end %>
+
+<h2><%= t(:your_next_pill_is_at)%><%= "#{format_pill_time(@next_pill[:time])}, #{@next_pill[:date]}" %></h2>
+
+<hr />
+
+<h3><%= t(:todays_record_history)%>:</h3>
+
+<% if @records.empty? %>
+  <h4><%= t(:no_record_submitted_today)%></h4>
+<% else %>
+  <%= render partial: "records/all_records",
+             locals: { table_id: 'record_list', patient: current_patient, records: @records } %>
+<% end %>
+
+<p><%= link_to(t(:view_all_record_history), records_path) %></p>

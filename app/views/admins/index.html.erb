@@ -1,0 +1,35 @@
+<h1><%= t(:administrators)%></h1>
+
+<p><%= link_to(t(:add_new_administrator), new_admin_registration_path) %></p>
+
+<% if @admins.size >= 1 %>
+
+<table class="fullwidth">
+  <thead>
+    <tr>
+      <th><%= t(:first_name)%></th>
+      <th><%= t(:last_name)%></th>
+      <th><%= t(:email)%></th>
+      <th><%= t(:roles)%></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+<% @admins.each do |admin| %>
+  <tr>
+    <td><%= admin.firstname %></td>
+    <td><%= admin.lastname %></td>
+    <td><%= admin.email %></td>
+    <td><%= array admin.roles, :name %></td>
+    <td><%= link_to t(:show), admin %></td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @admins %>
+
+<% else %>
+  <p><%= t(:there_is_no_adminstrator_configured_for_the_system)%></p>
+<% end %>

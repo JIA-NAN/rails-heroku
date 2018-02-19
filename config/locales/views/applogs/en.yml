@@ -1,0 +1,20 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+ editing_applog: Editing applog
+ show: "Show"
+ back: "Back"
+ app_logs: "App Logs"
+ no_log_available: "No log available."
+ level: "Level"
+ time: "Time"
+ id: "Id"
+ device: "Device"
+ version: "Version"
+ content: "Content"
+ new_applog: "New applog"
+ app_logs_on: "App Logs on "
+
+  
+

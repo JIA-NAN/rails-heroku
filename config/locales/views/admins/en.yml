@@ -1,0 +1,44 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  resend_confirmation_instructions: "Resend confirmation instructions"
+  add_new_administrator: "Add New Administrator"
+  first_name: "First Name"
+  last_name: "Last Name"
+  email: "Email"
+  roles: "Roles"
+  show: "Show"
+  there_is_no_adminstrator_configured_for_the_system: There is no adminstrator configured for the system.
+  administrators: "Administrators"
+  welcome: Welcome
+  you_can_confirm_your_account_email_through_the_link_below: "You can confirm your account email through the link below:"
+  confirm_my_account: "Confirm my account"
+  hello: "Hello "
+  someone_has_requested_a_link_to_change_your_password: "Someone has requested a link to change your password. You can do this through the link below."
+  change_my_password: "Change my password"
+  if_you_did_not_request_this: "If you didn't request this, please ignore this email."
+  your_password_wont_change: "Your password won't change until you access the link above and create a new one."
+  your_account_has_been_locked: Your account has been locked due to an excessive number of unsuccessful sign in attempts.
+  click_the_link_below_to_unlock: "Click the link below to unlock your account:"
+  unlock_my_account: 'Unlock my account'
+  change_your_password: "Change your password"
+  change_my_password: "Change my password"
+  edit_your_account: "Edit Your Account"
+  currently_waiting: "Currently waiting confirmation for: %{email}"
+  leave_blank: "Leave blank if you don't want to change it"
+  we_need_your_current_password: "We need your current password to confirm your changes"
+  update: "Update"
+  create_a_admin_account: "Create a Admin Account"
+  create: "Create"
+  sign_in: "Sign in"
+  administrator: "Administrator: "
+  role: "Role"
+  delete_administrator: "Delete Administrator"
+  are_you_sure: "Are you sure?"
+  back: "Back"
+  resend_unlock_instructions: "Resend unlock instructions"
+  
+
+  
+

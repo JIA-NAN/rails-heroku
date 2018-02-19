@@ -1,0 +1,22 @@
+<%= render "shared/header" %>
+<%= render "shared/menu" %>
+
+<div class="row main-content">
+  <!-- Main Content -->
+  <div class="large-12 columns">
+    <% if flash[:notice] %>
+      <div data-alert class="alert-box success" id="notice">
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div data-alert class="alert-box alert" id="notice">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+  <!-- End Main Content -->
+</div>
+
+<%= render "shared/footer" %>

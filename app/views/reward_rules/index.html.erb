@@ -1,0 +1,15 @@
+<h1><%= t(:listing_reward_rules)%></h1>
+
+<% if RewardRule.count == 0 %>
+
+<h1><%= t(:new_reward_rule) %></h1>
+<%= render 'form' %>
+<%= link_to 'Back', reward_rules_path %>
+
+<% else %>
+<h3>
+After adhering fully consecutively for <%= @reward_rule.num_of_days %> days, patient will receive <%= number_to_currency(@reward_rule.reward) %>.
+</h3>
+<% end %>
+<%= link_to 'Edit', edit_reward_rule_path(@reward_rule) %> |
+<%= link_to 'Back', reward_rules_path %>

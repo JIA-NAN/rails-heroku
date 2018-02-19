@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">MIST ID</Data></Cell>
+        <Cell><Data ss:Type="String">First Name</Data></Cell>
+        <Cell><Data ss:Type="String">Last Name</Data></Cell>
+        <Cell><Data ss:Type="String">Created At</Data></Cell>
+        <Cell><Data ss:Type="String">Updated At</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">sign in count</Data></Cell>
+        <Cell><Data ss:Type="String">last in at</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
+      </Row>
+      <% @patients.each do |patient| %>
+          <Row>
+            <Cell><Data ss:Type="Number"><%= patient.mist_id %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.firstname %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.lastname %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.created_at %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.updated_at %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.email %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= patient.sign_in_count %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.last_sign_in_at %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= patient.phone %></Data></Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

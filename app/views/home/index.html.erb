@@ -1,0 +1,16 @@
+<%= render 'advice' if @grade %>
+
+<% if @schedule.nil? %>
+
+  <h1><%= t(:you_do_not_have_any_schedule)%></h1>
+  <p><%= t(:please_contact_your_doctor)%></p>
+
+<% elsif @records %>
+
+  <%= render 'record_history' %>
+
+<% elsif @record %>
+
+  <%= render 'record_frame' %>
+
+<% end %>

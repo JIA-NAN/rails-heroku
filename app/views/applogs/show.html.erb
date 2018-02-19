@@ -1,0 +1,33 @@
+<h1><%= t(:app_logs_on)%><%= params[:id] %></h1>
+
+<%= display_filters(@filter_list, @active_filter) %>
+
+<% if @applogs.empty? %>
+  <p><%= t(:no_log_available)%></p>
+<% else %>
+  <table class="fullwidth">
+    <tr>
+      <th><%= t(:level)%></th>
+      <th><%= t(:time)%></th>
+      <th><%= t(:id)%></th>
+      <th><%= t(:device)%></th>
+      <th><%= t(:version)%></th>
+      <th><%= t(:content)%></th>
+    </tr>
+
+  <% @applogs.each do |applog| %>
+    <tr class="<%= applog.level %>">
+      <td class="<%= applog.level %>"><%= applog.level %></td>
+      <td><%= localtime applog.created_at %></td>
+      <td><%= link_to applog.identifier, applog_path(applog.identifier) %></td>
+      <td><%= applog.device %></td>
+      <td><%= applog.version %></td>
+      <td><%= applog.content %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <%= will_paginate @applogs %>
+<% end %>
+
+<%= link_to t(:back), applogs_path %>
